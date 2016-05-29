@@ -44,4 +44,17 @@ class ArticleContent extends \yii\db\ActiveRecord
             'content' => Yii::t('common\message', 'Content'),
         ];
     }
+
+    /**
+     * @param $args
+     * @return ArticleContent|null|static
+     */
+    public static function findModel($args)
+    {
+        if (($model = ArticleContent::findOne($args)) !== null) {
+            return $model;
+        } else {
+            return new ArticleContent();
+        }
+    }
 }

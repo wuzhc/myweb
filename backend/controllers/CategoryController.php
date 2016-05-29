@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\service\CategoryService;
 use Yii;
 use common\models\Categories;
 use backend\models\CategorySearch;
@@ -61,14 +62,13 @@ class CategoryController extends Controller
     public function actionCreate()
     {
         $model = new Categories();
-        $data = Categories::find()->where('parent = 0')->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->saveCategoryPath();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'data' => $data,
             ]);
         }
     }
@@ -84,6 +84,7 @@ class CategoryController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->saveCategoryPath();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

@@ -18,8 +18,8 @@ class AricleSearch extends Article
     public function rules()
     {
         return [
-            [['id', 'user_id', 'category_id', 'hits', 'comments', 'sort', 'status', 'create_at'], 'integer'],
-            [['title', 'summary', 'image_url'], 'safe'],
+            //[['id', 'user_id', 'category_id', 'hits', 'comments', 'sort', 'status', 'create_at'], 'integer'],
+            [['id', 'user_id', 'category_id', 'hits', 'comments', 'sort', 'status','title', 'summary', 'image_url', 'create_at'], 'safe'],
         ];
     }
 
@@ -72,6 +72,8 @@ class AricleSearch extends Article
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'summary', $this->summary])
             ->andFilterWhere(['like', 'image_url', $this->image_url]);
+
+        $query->addOrderBy(['id' => SORT_DESC]);
 
         return $dataProvider;
     }

@@ -1,5 +1,6 @@
 <?php
 
+use common\service\CategoryService;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -10,27 +11,26 @@ use yii\widgets\ActiveForm;
 
 <div class="article-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true])->label('标题') ?>
 
-    <?= $form->field($model, 'summary')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'summary')->textarea(['rows' => 6])->label('简述') ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <?= $form->field($model, 'content')->textarea(['rows' => 10])->label('内容') ?>
 
-    <?= $form->field($model, 'category_id')->textInput() ?>
+    <?= $form->field($model, 'category_id')->dropDownList(CategoryService::factory()->getCategoriesMap()) ?>
 
-    <?= $form->field($model, 'image_url')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'image_url')->fileInput() ?>
 
-    <?= $form->field($model, 'hits')->textInput() ?>
+    <?= $form->field($model, 'hits')->textInput(['value' => 0])->label('点击数') ?>
 
-    <?= $form->field($model, 'comments')->textInput() ?>
+    <?= $form->field($model, 'comments')->textInput(['value' => 0])->label('评论数') ?>
 
-    <?= $form->field($model, 'sort')->textInput() ?>
+    <?= $form->field($model, 'sort')->textInput(['value' => 0])->label('排序') ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->radioList(['0' => '已审核', '1' => '未审核'])->label('状态') ?>
 
-    <?= $form->field($model, 'create_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -18,8 +18,7 @@ class CategorySearch extends Categories
     public function rules()
     {
         return [
-            [['id', 'parent', 'sort', 'status', 'create_at'], 'integer'],
-            [['title'], 'safe'],
+            [['id', 'parent', 'sort', 'status', 'create_at','title'], 'safe'],
         ];
     }
 
@@ -34,9 +33,7 @@ class CategorySearch extends Categories
 
     /**
      * Creates data provider instance with search query applied
-     *
      * @param array $params
-     *
      * @return ActiveDataProvider
      */
     public function search($params)
@@ -61,12 +58,15 @@ class CategorySearch extends Categories
         $query->andFilterWhere([
             'id' => $this->id,
             'parent' => $this->parent,
-            'sort' => $this->sort,
             'status' => $this->status,
             'create_at' => $this->create_at,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title]);
+
+        //add sort by wuzhc 2016-05-29
+        $sort = $this->sort == 'desc' ? SORT_DESC : SORT_ASC;
+        $query->addOrderBy(['path' => SORT_ASC, 'sort' => $sort]);
 
         return $dataProvider;
     }

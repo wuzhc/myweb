@@ -2,12 +2,14 @@
 
 namespace backend\controllers;
 
+use common\helper\DebugHelper;
 use Yii;
 use common\models\Article;
 use backend\models\AricleSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ArticleController implements the CRUD actions for Article model.
@@ -62,13 +64,23 @@ class ArticleController extends Controller
     {
         $model = new Article();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $fileInstance = UploadedFile::getInstance($model, 'image_url');
+            if ($fileInstance && ($filePath = $model->upload($fileInstance))) {
+                $model->image_url = $filePath;
+            }
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+
     }
 
     /**
@@ -80,14 +92,27 @@ class ArticleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->content = $model->body->content;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $fileInstance = UploadedFile::getInstance($model, 'image_url');
+            if ($fileInstance && ($filePath = $model->upload($fileInstance))) {
+                $model->image_url = $filePath;
+            } else {
+                unset($model->image_url);
+            }
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
         }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+
     }
 
     /**
@@ -98,7 +123,11 @@ class ArticleController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if ($model->body) {
+            $model->body->delete();
+        }
+        $model->delete();
 
         return $this->redirect(['index']);
     }

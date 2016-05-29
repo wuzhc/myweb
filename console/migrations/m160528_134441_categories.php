@@ -19,6 +19,8 @@ class m160528_134441_categories extends Migration
             'parent' => $this->integer()->defaultValue(0),
             'title' => $this->string(100)->notNull(),
             'sort' => $this->integer()->defaultValue(0),
+            'path' => $this->string()->defaultValue(0),
+            'level' => $this->smallInteger(),
             'status' => $this->smallInteger()->defaultValue(0),
             'create_at' => $this->integer()->notNull(),
         ], $tableOptions);
