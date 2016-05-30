@@ -33,3 +33,5 @@ phpunit.phar
 /.vagrant
 
 /uploads
+/webuploader/upload
+vendor.rar
