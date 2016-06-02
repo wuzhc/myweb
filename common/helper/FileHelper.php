@@ -18,9 +18,28 @@ class FileHelper extends \yii\helpers\FileHelper
 
     public static function getSize($filename)
     {
-        if (!is_file($filename)) {
+        $file = self::getFilePath($filename);
+        if (!is_file($file)) {
             return 0;
         }
-        return filesize($filename);
+        return filesize($file);
+    }
+
+    public static function getFilePath($file)
+    {
+        return \Yii::getAlias('@webroot'). DIRECTORY_SEPARATOR . $file;
+    }
+
+    /**
+     * get web url of file
+     * @param $file
+     * @return string
+     */
+    public static function getFileWebUrl($file)
+    {
+        if (substr($file, 0, 7) == 'uploads') {
+            return \Yii::getAlias('@web') . '/' . $file;
+        }
+        return $file;
     }
 }

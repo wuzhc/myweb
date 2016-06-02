@@ -5,28 +5,43 @@ namespace common\helper;
 
 use common\util\ImageUtil;
 use Yii;
-use yii\helpers\FileHelper;
+use yii\bootstrap\Html;
+use common\helper\FileHelper;
 use yii\web\HttpException;
 
 class ImageHelper
 {
 
+    /**
+     * image thumb
+     * @param $filename
+     * @param null $width
+     * @param null $height
+     * @param bool|true $crop
+     * @return string
+     * @throws HttpException
+     * @throws \yii\base\Exception
+     */
     public static function thumb($filename, $width = null, $height = null, $crop = true)
     {
-        $filename = str_replace(Yii::$app->request->hostInfo, '', $filename);
-        if($filename && file_exists(($filename = Yii::getAlias('@webroot') . $filename)))
-        {
-            $info = pathinfo($filename);
-            $thumbName = $info['filename'] . '-' . md5( filemtime($filename) . (int)$width . (int)$height . (int)$crop ) . '.' . $info['extension'];
+        //Returns filename immediately when url contain 'http'
+        if (stripos($filename, 'http') !== false) {
+            return $filename;
+        }
+
+        $filePath = FileHelper::getFilePath($filename);
+        if(file_exists($filePath)) {
+            $info = pathinfo($filePath);
+            $thumbName = $info['filename'] . '-' . md5( filemtime($filePath) . (int)$width . (int)$height . (int)$crop ) . '.' . $info['extension'];
             $thumbFile = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'thumbs' . DIRECTORY_SEPARATOR . $thumbName;
-            $thumbWebFile = '/' . 'uploads' . '/thumbs/' . $thumbName;
+            $thumbWebFile = Yii::getAlias('@web') . '/' . 'uploads' . '/thumbs/' . $thumbName;
             if(file_exists($thumbFile)){
                 return $thumbWebFile;
-            }
-            elseif (FileHelper::createDirectory(dirname($thumbFile), 0777) && self::copyResizedImage($filename, $thumbFile, $width, $height, $crop)) {
+            } elseif (FileHelper::createDirectory(dirname($thumbFile), 0777) && self::copyResizedImage($filename, $thumbFile, $width, $height, $crop)) {
                 return $thumbWebFile;
             }
         }
+
         return '';
     }
 
@@ -68,6 +83,17 @@ class ImageHelper
         else {
             throw new HttpException(500, 'Please install GD or Imagick extension');
         }
+    }
+
+    /**
+     * show image in html
+     * @param $fileUrl
+     * @return string
+     */
+    public static function showImageInHtml($fileUrl)
+    {
+        $fileUrl = \common\helper\FileHelper::getFileWebUrl($fileUrl);
+        return Html::img($fileUrl);
     }
 
 }

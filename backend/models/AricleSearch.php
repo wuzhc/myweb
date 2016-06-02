@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use common\models\Content;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -10,7 +11,7 @@ use common\models\Article;
 /**
  * AricleSearch represents the model behind the search form about `common\models\Article`.
  */
-class AricleSearch extends Article
+class AricleSearch extends Content
 {
     /**
      * @inheritdoc
@@ -41,14 +42,14 @@ class AricleSearch extends Article
      */
     public function search($params)
     {
-        $query = Article::find();
+        $query = Content::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 2,
+                'pageSize' => 5,
             ],
         ]);
 

@@ -29,7 +29,7 @@ class ArticleService extends AbstractService
      * @param $id
      * @return Article|null|static
      */
-    public function findArticleModel($id = null)
+    public function findArticleModel111($id = null)
     {
         if (($model = Article::findOne($id)) !== null) {
             return $model;

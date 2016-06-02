@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\ImageHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -31,14 +32,29 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'summary:ntext',
-            'user_id',
-            'category_id',
-            'image_url:url',
+            [
+                'label' => '作者',
+                'attribute' => 'author.username',
+            ],
+            [
+                'label' => '所属类别',
+                'attribute' => 'category.title',
+            ],
+            [
+                'label' => '缩列图',
+                'attribute' => 'image_url',
+                'format' => 'html',
+                'value' => ImageHelper::showImageTag($model->image_url),
+            ],
             'hits',
             'comments',
             'sort',
-            'status',
-            'create_at',
+            [
+                'label' => '状态',
+                'attribute' => 'status',
+                'value' => $model->status === 0 ? '已审核' : '未审核',
+            ],
+            'create_at:datetime:创建日期',
         ],
     ]) ?>
 

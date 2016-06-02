@@ -55,8 +55,8 @@ if ( !empty($_REQUEST[ 'debug' ]) ) {
 
 // Settings
 // $targetDir = ini_get("upload_tmp_dir") . DIRECTORY_SEPARATOR . "plupload";
-$targetDir = 'upload_tmp/' . date('Ymd');
-$uploadDir = 'upload/' . date('Ymd');
+$targetDir = '../uploads/upload_tmp/' . date('Ymd');
+$uploadDir = '../uploads/' . date('Ymd');
 
 $cleanupTargetDir = true; // Remove old files
 $maxFileAge = 5 * 3600; // Temp file age in seconds
@@ -176,6 +176,6 @@ if ( $done ) {
 // Return Success JSON-RPC response
 //die('{"jsonrpc" : "2.0", "result" : null, "id" : "id", "filePath" : "'. $uploadPath .'"}');
 echo json_encode([
-    'filePath' => 'webuploader/' . $uploadPath,
+    'filePath' => substr($uploadPath, 3),
     'title' => $fileName,
 ]);

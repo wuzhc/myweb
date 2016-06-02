@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "{{%article_content}}".
  *
  * @property integer $id
- * @property integer $article_id
+ * @property integer $content_id
  * @property string $content
  */
 class ArticleContent extends \yii\db\ActiveRecord
@@ -27,9 +27,9 @@ class ArticleContent extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['article_id'], 'integer'],
+            [['content_id'], 'integer'],
             [['content'], 'string'],
-            [['article_id'], 'unique'],
+            [['content_id'], 'unique'],
         ];
     }
 
@@ -40,7 +40,7 @@ class ArticleContent extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('common\message', 'ID'),
-            'article_id' => Yii::t('common\message', 'Article ID'),
+            'content_id' => Yii::t('common\message', 'Content ID'),
             'content' => Yii::t('common\message', 'Content'),
         ];
     }

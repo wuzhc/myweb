@@ -46,7 +46,7 @@ class UploadHelper
      * @return array|bool
      * @throws HttpException
      */
-    public static function uploadImage(UploadedFile $fileInstance, $targetDir = '', $resizeWidth = '', $resizeHeight = '', $crop = false)
+    public static function uploadImage(UploadedFile $fileInstance, $targetDir = '', $resizeWidth = '', $resizeHeight = '', $crop = true)
     {
         if (!($fileInstance instanceof UploadedFile)) {
             return false;
