@@ -3,48 +3,75 @@
 namespace common\helper;
 
 
+use common\config\Conf;
 use common\util\ImageUtil;
 use Yii;
 use yii\bootstrap\Html;
-use common\helper\FileHelper;
 use yii\web\HttpException;
 
 class ImageHelper
 {
 
     /**
-     * image thumb
+     * Generates image thumb
+     * Returns default thumb image when file is not exist
+     *
      * @param $filename
-     * @param null $width
-     * @param null $height
+     * Format is as follows "/uploads/20160604/677c60f0973e78fc76868c79cf5296dc.jpg"
+     * @param int $width default to 320
+     * @param int $height default to 140
      * @param bool|true $crop
      * @return string
      * @throws HttpException
-     * @throws \yii\base\Exception
+     * @throws \yii\base\Exception]
      */
-    public static function thumb($filename, $width = null, $height = null, $crop = true)
+    public static function thumb($filename, $width = 320, $height = 140, $crop = true)
     {
         //Returns filename immediately when url contain 'http'
         if (stripos($filename, 'http') !== false) {
             return $filename;
         }
 
-        $filePath = FileHelper::getFilePath($filename);
-        if(file_exists($filePath)) {
-            $info = pathinfo($filePath);
-            $thumbName = $info['filename'] . '-' . md5( filemtime($filePath) . (int)$width . (int)$height . (int)$crop ) . '.' . $info['extension'];
-            $thumbFile = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'thumbs' . DIRECTORY_SEPARATOR . $thumbName;
-            $thumbWebFile = Yii::getAlias('@web') . '/' . 'uploads' . '/thumbs/' . $thumbName;
-            if(file_exists($thumbFile)){
-                return $thumbWebFile;
-            } elseif (FileHelper::createDirectory(dirname($thumbFile), 0777) && self::copyResizedImage($filename, $thumbFile, $width, $height, $crop)) {
-                return $thumbWebFile;
+        $localPath = FileHelper::getLocalPath($filename);
+        if (!is_file($localPath)) {
+            return self::getDefaultThumb();
+        }
+
+        $info = pathinfo($localPath);
+        $thumbName = $info['filename'] . '-' . md5( filemtime($localPath) . (int)$width . (int)$height . (int)$crop ) . '.' . $info['extension'];
+        $thumbWebUrl = Yii::getAlias('@web') . '/' . 'uploads' . '/thumbs/' . $thumbName;
+        if (file_exists($thumbWebUrl)) {
+            return $thumbWebUrl;
+        }
+
+        $thumbPath = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'thumbs' . DIRECTORY_SEPARATOR . $thumbName;
+        if (FileHelper::createDirectory(dirname($thumbPath), 0777)) {
+            if (self::copyResizedImage($localPath, $thumbPath, $width, $height, $crop)) {
+                return $thumbWebUrl;
             }
         }
 
-        return '';
+        return self::getDefaultThumb();
     }
 
+    /**
+     * Returns default thumb
+     * @return string
+     */
+    public static function getDefaultThumb()
+    {
+        return Yii::getAlias('@web') . '/' . Conf::UPLOAD_DEFAULT_DIR . '/' .Conf::THUMB_DEFAULT;
+    }
+
+    /**
+     * @param $inputFile
+     * @param $outputFile
+     * @param $width
+     * @param null $height
+     * @param bool|true $crop
+     * @return bool
+     * @throws HttpException
+     */
     public static function copyResizedImage($inputFile, $outputFile, $width, $height = null, $crop = true)
     {
         if (extension_loaded('gd'))

@@ -15,6 +15,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $id
  * @property integer $parent
  * @property string $title
+ * @property string $model_id
  * @property integer $sort
  * @property integer $level
  * @property integer $path
@@ -39,7 +40,7 @@ class Categories extends ActiveRecord
         return [
             [['title'], 'required'],
             [['title'], 'string', 'max' => 100],
-            [['id', 'parent', 'sort', 'path', 'level', 'status', 'create_at','title'], 'safe'],
+            [['id', 'model_id', 'parent', 'sort', 'path', 'level', 'status', 'create_at','title'], 'safe'],
         ];
     }
 
@@ -67,6 +68,7 @@ class Categories extends ActiveRecord
             'id' => Yii::t('common\message', 'ID'),
             'parent' => Yii::t('common\message', 'Parent'),
             'title' => Yii::t('common\message', 'Title'),
+            'model_id' => Yii::t('common\message', 'Model ID'),
             'sort' => Yii::t('common\message', 'Sort'),
             'status' => Yii::t('common\message', 'Status'),
             'level' => Yii::t('common\message', 'level'),
@@ -77,14 +79,10 @@ class Categories extends ActiveRecord
 
     public function saveCategoryPath()
     {
-        $this->path = $this->parentPath . '-' . $this->id;
+        $this->path = CategoryService::factory()->getParentPath($this->parent) . '-' . $this->id;
         $this->level = substr_count($this->path, '-');
         $this->save();
     }
 
-    public function getParentPath()
-    {
-        return CategoryService::factory()->getParentPath($this->parent);
-    }
 
 }

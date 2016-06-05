@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => '缩列图',
                 'attribute' => 'image_url',
                 'format' => 'html',
-                'value' => ImageHelper::showImageTag($model->image_url),
+                'value' => Html::img(\common\helper\ImageHelper::thumb($model->image_url))
             ],
             'hits',
             'comments',

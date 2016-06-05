@@ -18,6 +18,7 @@ use yii\web\UploadedFile;
  * @property string $summary
  * @property integer $user_id
  * @property integer $category_id
+ * @property integer $model_id
  * @property string $image_url
  * @property integer $hits
  * @property integer $comments
@@ -49,7 +50,7 @@ class Content extends ActiveRecord
             [['user_id', 'category_id', 'hits', 'comments', 'sort', 'status', 'create_at'], 'integer'],
             [['title'], 'string', 'max' => 200],
             [['image_url'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
-            [['user_id', 'category_id', 'create_at', 'content', 'contentModel'], 'safe']
+            [['user_id', 'category_id', 'model_id', 'create_at', 'content', 'contentModel'], 'safe']
         ];
     }
 
@@ -80,6 +81,7 @@ class Content extends ActiveRecord
             'summary' => Yii::t('common\messages', 'Summary'),
             'user_id' => Yii::t('common\messages', 'User ID'),
             'category_id' => Yii::t('common\messages', 'Category ID'),
+            'model_id' => Yii::t('common\messages', 'Model ID'),
             'image_url' => Yii::t('common\messages', 'Image Url'),
             'hits' => Yii::t('common\messages', 'Hits'),
             'comments' => Yii::t('common\messages', 'Comments'),

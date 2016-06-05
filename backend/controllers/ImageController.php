@@ -2,8 +2,10 @@
 
 namespace backend\controllers;
 
+use common\config\Conf;
 use common\helper\DebugHelper;
 use common\helper\FileHelper;
+use common\helper\UploadHelper;
 use common\models\ImageContent;
 use common\service\ContentService;
 use Yii;
@@ -12,6 +14,7 @@ use backend\models\ImageSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ImageController implements the CRUD actions for Content model.
@@ -71,6 +74,8 @@ class ImageController extends Controller
             $urlArr = Yii::$app->request->post('url');
             $titleArr = Yii::$app->request->post('title');
             $model->image_url = $urlArr[0];
+            $model->model_id = Conf::ALBUM_MODEL;
+
             if (!$model->save()) {
                 foreach ($model->getErrors() as $errors) {
                     foreach ($errors as $e) {
@@ -151,5 +156,10 @@ class ImageController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionUpload()
+    {
+        echo UploadHelper::uploadToSimditor('imageUrl','simditor', 600, 450);
     }
 }

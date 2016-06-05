@@ -12,6 +12,8 @@ $this->title = '分类';
 $this->params['breadcrumbs'][] = $this->title;
 
 $categories = CategoryService::factory()->getCategoriesMap();
+$models = CategoryService::factory()->getModels();
+
 ?>
 <div class="categories-index">
 
@@ -49,6 +51,15 @@ $categories = CategoryService::factory()->getCategoriesMap();
                 },
                 'filter' => CategoryService::factory()->getCategoriesMap(),
                 'headerOptions' => ['width' => '180'],
+            ],
+            [
+                'label' => '模型',
+                'attribute' => 'model_id',
+                'value' => function ($searchModel) use ($models) {
+                    return $models[$searchModel->model_id];
+                },
+                'filter' => $models,
+                'headerOptions' => ['width' => 100]
             ],
             [
                 'label' => '排序',

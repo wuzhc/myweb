@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use common\config\Conf;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -65,6 +66,7 @@ class ImageSearch extends Content
             'id' => $this->id,
             'user_id' => $this->user_id,
             'category_id' => $this->category_id,
+            'model_id' => Conf::ALBUM_MODEL,
             'hits' => $this->hits,
             'comments' => $this->comments,
             'sort' => $this->sort,

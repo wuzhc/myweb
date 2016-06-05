@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use common\config\Conf;
 use common\models\Content;
 use Yii;
 use yii\base\Model;
@@ -71,6 +72,7 @@ class AricleSearch extends Content
             'sort' => $this->sort,
             'status' => $this->status,
             'create_at' => $this->create_at,
+            'model_id' => Conf::ARTICLE_MODEL,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])

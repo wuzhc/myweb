@@ -18,7 +18,7 @@ class CategorySearch extends Categories
     public function rules()
     {
         return [
-            [['id', 'parent', 'sort', 'status', 'create_at','title'], 'safe'],
+            [['id', 'parent', 'model_id', 'sort', 'status', 'create_at','title'], 'safe'],
         ];
     }
 
@@ -57,6 +57,7 @@ class CategorySearch extends Categories
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'model_id' => $this->model_id,
             'parent' => $this->parent,
             'status' => $this->status,
             'create_at' => $this->create_at,
@@ -64,9 +65,8 @@ class CategorySearch extends Categories
 
         $query->andFilterWhere(['like', 'title', $this->title]);
 
-        //add sort by wuzhc 2016-05-29
         $sort = $this->sort == 'desc' ? SORT_DESC : SORT_ASC;
-        $query->addOrderBy(['path' => SORT_ASC, 'sort' => $sort]);
+        $query->addOrderBy(['model_id' => SORT_ASC, 'path' => SORT_ASC, 'sort' => $sort]);
 
         return $dataProvider;
     }

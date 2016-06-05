@@ -15,6 +15,7 @@ use common\models\ArticleContent;
 use common\models\ImageContent;
 use yii\base\InvalidValueException;
 use yii\base\Model;
+use yii\data\ActiveDataProvider;
 
 class ContentService extends AbstractService
 {
@@ -29,21 +30,7 @@ class ContentService extends AbstractService
     }
 
     /**
-     * find article model
-     * @param $id
-     * @return Article|null|static
-     */
-    public function findContentModel($id = null)
-    {
-        if (($model = Article::findOne($id)) !== null) {
-            return $model;
-        } else {
-            return new Article();
-        }
-    }
-
-    /**
-     * save article content
+     * save content in article_content table
      * @param array $data
      * @param null $find
      * @return bool
@@ -60,7 +47,7 @@ class ContentService extends AbstractService
     }
 
     /**
-     * save image content
+     * save content in image_content table
      * @param array $data
      * @param null $find
      * @return bool
@@ -97,4 +84,73 @@ class ContentService extends AbstractService
         return $model->save();
     }
 
+    /**
+     * @param array $args
+     * @param int $pageSize
+     * @return ActiveDataProvider
+     */
+    public function getContents(array $args, $pageSize = 5)
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => $this->findQuery($args),
+            'pagination' => [
+                'pageSize' => $pageSize,
+            ],
+        ]);
+        return $dataProvider;
+    }
+
+    /**
+     * @param array $args
+     * @return null|static
+     */
+    public function getContent(array $args)
+    {
+        return Content::findOne($args);
+    }
+
+    /**
+     * @param array $args
+     * @return \yii\db\ActiveQuery
+     */
+    public function findQuery(array $args)
+    {
+        $query = Content::find();
+
+        if (isset($args['select'])) {
+            $query->select($args['select']);
+        }
+        if (isset($args['with'])) {
+            $query->joinWith($args['with']);
+        }
+        if (isset($args['id'])) {
+            $query->andFilterWhere(['id' => $args['id']]);
+        }
+        if (isset($args['title'])) {
+            $query->andFilterWhere(['like', 'title', $args['title']]);
+        }
+        if (isset($args['userID'])) {
+            $query->andFilterWhere(['user_id' => $args['userID']]);
+        }
+        if (isset($args['categoryID'])) {
+            $query->andFilterWhere(['category_id' => $args['categoryID']]);
+        }
+        if (isset($args['modelID'])) {
+            $query->andFilterWhere(['model_id' => $args['modelID']]);
+        }
+        if (isset($args['status'])) {
+            $query->andFilterWhere(['status' => $args['status']]);
+        }
+        if (isset($args['order'])) {
+            $query->addOrderBy($args['order']);
+        }
+        if (isset($args['group'])) {
+            $query->addGroupBy($args['group']);
+        }
+        if (isset($args['limit'])) {
+            $query->limit($args['limit']);
+        }
+
+        return $query;
+    }
 }

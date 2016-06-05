@@ -9,15 +9,19 @@ use common\service\CategoryService;
 /* @var $model common\models\Categories */
 /* @var $form yii\widgets\ActiveForm */
 
-$rootCategories = CategoryService::factory()->getCategoriesMap(['condition' => 'parent = 0 OR parent = 1']);
+$categories = CategoryService::factory()->getCategoriesMap();
+$categories[0] = '顶级大类';
+
 ?>
 <div class="categories-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'parent')->dropDownList($rootCategories)->label('所属分类');?>
+    <?= $form->field($model, 'parent')->dropDownList($categories)->label('所属分类');?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true])->label('名称') ?>
+
+    <?= $form->field($model, 'model_id')->dropDownList(CategoryService::factory()->getModels())->label('模型')?>
 
     <?= $form->field($model, 'sort')->textInput(['value' => 0])->label('排序') ?>
 

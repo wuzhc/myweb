@@ -1,5 +1,6 @@
 <?php
 
+use common\config\Conf;
 use common\service\CategoryService;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -47,15 +48,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($searchModel) {
                     return $searchModel->category->title;
                 },
-                'filter' => CategoryService::factory()->getCategoriesMap(),
-                'headerOptions' => ['width' => '100'],
+                'filter' => CategoryService::factory()->getCategoriesMap(['model_id' => Conf::ALBUM_MODEL]),
+                'headerOptions' => ['width' => '130'],
             ],
             [
                 'label' => '缩列图',
                 'attribute' => 'image_url',
                 'format' => 'html',
                 'value' => function ($searchModel) {
-                    return Html::img(\common\helper\ImageHelper::thumb($searchModel->image_url, 120, 80));
+                    return Html::img(\common\helper\ImageHelper::thumb($searchModel->image_url));
                 }
             ],
             // 'hits',

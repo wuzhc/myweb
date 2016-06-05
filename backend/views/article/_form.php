@@ -1,5 +1,6 @@
 <?php
 
+use common\config\Conf;
 use common\service\CategoryService;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -17,9 +18,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'summary')->textarea(['rows' => 6])->label('简述') ?>
 
-    <?= $form->field($model, 'content')->textarea(['rows' => 10])->label('内容') ?>
+    <?= \common\widgets\SimditorWidget::widget(['model' => $model])?>
 
-    <?= $form->field($model, 'category_id')->dropDownList(CategoryService::factory()->getCategoriesMap()) ?>
+    <?= $form->field($model, 'category_id')->dropDownList(CategoryService::factory()->getCategoriesMap(['model_id' => Conf::ARTICLE_MODEL])) ?>
 
     <?= $form->field($model, 'image_url')->fileInput() ?>
 

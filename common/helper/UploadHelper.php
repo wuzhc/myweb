@@ -3,7 +3,7 @@
 namespace common\helper;
 
 
-use yii\helpers\FileHelper;
+use common\config\Conf;
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 use yii\web\HttpException;
@@ -11,7 +11,32 @@ use yii\web\UploadedFile;
 
 class UploadHelper
 {
-    const UPLOAD_DIR = 'uploads';
+    /**
+     * upload file to Simditor
+     * @param $attribute
+     * @param string $targetDir
+     * @param string $resizeWidth
+     * @param string $resizeHeight
+     * @param bool|true $crop
+     * @return string
+     * @throws HttpException
+     */
+    public static function uploadToSimditor($attribute,  $targetDir = 'simditor', $resizeWidth = '', $resizeHeight = '', $crop = true)
+    {
+        $file = UploadedFile::getInstanceByName($attribute);
+        $res = self::uploadFile($file, $targetDir);
+
+        if (false === $res) {
+            return json_encode(array('success' => false));
+        }
+
+        $return['success'] = true;
+        $return['file_path'] = $res;
+        $resizeWidth and $return['width'] = $resizeWidth;
+        $resizeHeight and $return['height'] = $resizeHeight;
+
+        return json_encode($return);
+    }
 
     /**
      * upload file to target directory
@@ -26,7 +51,7 @@ class UploadHelper
             return false;
         }
 
-        $filename = self::getUploadPath($targetDir) . DIRECTORY_SEPARATOR;
+        $filename = self::getTargetPath($targetDir) . DIRECTORY_SEPARATOR;
         $filename .= $fileInstance->baseName . '.' . $fileInstance->extension;
 
         if (!$fileInstance->saveAs($filename)) {
@@ -52,7 +77,7 @@ class UploadHelper
             return false;
         }
 
-        $filename = self::getUploadPath($targetDir) . DIRECTORY_SEPARATOR;
+        $filename = self::getTargetPath($targetDir) . DIRECTORY_SEPARATOR;
         $filename .= $fileInstance->baseName . '.' . $fileInstance->extension;
 
         if ($crop) {
@@ -75,9 +100,9 @@ class UploadHelper
      * @throws HttpException
      * @throws \yii\base\Exception
      */
-    public static function getUploadPath($targetDir = '')
+    public static function getTargetPath($targetDir = '')
     {
-        $path = \Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . self::UPLOAD_DIR;
+        $path = \Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . Conf::UPLOAD_DEFAULT_DIR;
         $path .= $targetDir ? DIRECTORY_SEPARATOR . $targetDir : '';
 
         if (!FileHelper::createDirectory($path)) {
