@@ -1,5 +1,5 @@
 $(function(){
-	var offset = 10;
+	var offset = 0;
 	var ajaxAbort = null;
 	$(".click_more").click(function(){
 		var $this = $(this);
@@ -22,8 +22,8 @@ $(function(){
 					$this.attr("more", 1);
 					return ;
 				}
-				$this.next("div").append(data);
-				offset = offset+10;
+				$this.prev("li").append(data);
+				offset = offset+1;
 				$this.html('点击查看更多');
 			}
 		});

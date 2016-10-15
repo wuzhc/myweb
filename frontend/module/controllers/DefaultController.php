@@ -102,7 +102,7 @@ class DefaultController extends Controller
         $cid = (int)Yii::$app->request->get('cid');
         $offset = (int)Yii::$app->request->get('offset');
         if (!is_numeric($cid) || !is_numeric($offset)) {
-            echo '';
+            Yii::$app->end();
         }
 
         echo $this->renderPartial('get_more', [
