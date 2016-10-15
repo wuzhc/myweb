@@ -136,4 +136,5 @@ class CategoryService extends AbstractService
         $categories = $this->getCategories(['parent' => $parentID]);
         return ArrayHelper::map($categories, 'id', 'title');
     }
+
 }

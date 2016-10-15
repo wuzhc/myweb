@@ -26,4 +26,10 @@ class Conf
 
     /** 数据为空默认图片提示 */
     const EMPTY_DATA = 'public/common/images/none_data.png';
+
+    /** 系统默认第一级分类 */
+    const CAT_FRONTEND = 1; //前端分类
+    const CAT_BACKEND = 2; //后端分类
+    const CAT_DATABASE = 3; //数据库分类
+    const CAT_SERVER = 4; //服务器分类
 }

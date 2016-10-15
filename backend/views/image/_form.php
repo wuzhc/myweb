@@ -21,6 +21,7 @@ $baseUrl = Yii::$app->request->baseUrl;
     <?= $form->field($model, 'category_id')->dropDownList(CategoryService::factory()->getCategoriesMap(['model_id' => Conf::ALBUM_MODEL]),['style' => "width:120px;"]) ?>
     <?= $form->field($model, 'sort')->textInput(['value' => 0, 'style' => "width:120px;"])->label('排序') ?>
     <?= $form->field($model, 'status')->radioList(['0' => '已审核', '1' => '未审核'])->label('状态') ?>
+    <?= $form->field($model, 'model_id')->hiddenInput(['value' => 2])->label(''); ?>
 
     <?= \common\widgets\WebUploadWidget::widget()?>
 

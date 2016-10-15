@@ -12,4 +12,11 @@ return [
         Conf::SHI_NEI_IMG => '室内设计',
         Conf::PING_MIAN_IMG => '平面设计',
     ],
+
+    'baseCats' => [
+        Conf::CAT_FRONTEND => '前端',
+        Conf::CAT_BACKEND => '后端',
+        Conf::CAT_DATABASE => '数据库',
+        Conf::CAT_SERVER => '服务器',
+    ],
 ];

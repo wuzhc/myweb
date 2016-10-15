@@ -37,9 +37,10 @@ class FileHelper extends \yii\helpers\FileHelper
      */
     public static function getWebUrl($file)
     {
-        if (substr($file, 0, 7) == '/uploads') {
-            return \Yii::getAlias('@web') . '/' . $file;
+        if (substr($file, 0, 8) == '/uploads') {
+            return \Yii::getAlias('@web') . $file;
         }
+
         return $file;
     }
 }

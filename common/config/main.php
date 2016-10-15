@@ -3,6 +3,7 @@ return [
     'language' => 'zh-CN',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'timeZone' => 'Asia/Shanghai',
+    'defaultRoute' => 'article',
     'components' => [
         'cache' => [
             'class' => 'yii\caching\FileCache',

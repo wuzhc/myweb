@@ -12,9 +12,9 @@ class WebAsset extends AssetBundle
     public $css = [
         'css/style.css',
         'css/reset.css',
-        'css/animate.css',
-        'css/magnific-popup.css',
-        'css/salvattore.css',
+       // 'css/animate.css',
+        //'css/magnific-popup.css',
+        //'css/salvattore.css',
     ];
     public $js = [
         'js/mainmenu/ddsmoothmenu.js',
@@ -22,11 +22,11 @@ class WebAsset extends AssetBundle
         'js/mainmenu/selectnav.js',
         'js/mainmenu/scripts.js',
 
-        'js/jquery.min.js',
-        'js/jquery.waypoints.min.js',
-        'js/jquery.magnific-popup.min.js',
-        'js/salvattore.min.js',
-        'js/main.js',
+        //'js/jquery.min.js',
+       // 'js/jquery.waypoints.min.js',
+      //  'js/jquery.magnific-popup.min.js',
+      //  'js/salvattore.min.js',
+       // 'js/main.js',
     ];
     /*public $depends = [
         'yii\web\JqueryAsset',

@@ -1,6 +1,7 @@
 <?php
 use yii\bootstrap\Html;
 $this->title = $content->title;
+\frontend\assets\AlbumAsset::register($this);
 ?>
 <div class="clearfix"></div>
 <!--start body-->
@@ -21,7 +22,7 @@ $this->title = $content->title;
                     <?php foreach($album as $a): ?>
                         <div class="item">
                             <div class="animate-box">
-                                <a href="<?= $a[1]?>" class="image-popup fh5co-board-img" title="<?= $a[0]?>"><img src="<?= $a[1]?>" alt="<?= $a[0]?>"></a>
+                                <a href="<?= \common\helper\FileHelper::getWebUrl($a[1])?>" class="image-popup fh5co-board-img" title="<?= $a[0]?>"><img src="<?= \common\helper\FileHelper::getWebUrl($a[1])?>" alt="<?= $a[0]?>"></a>
                             </div>
                             <div class="fh5co-desc"><?= $a[0]?></div>
                         </div>

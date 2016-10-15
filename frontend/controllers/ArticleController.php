@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\config\Conf;
 use common\helper\DebugHelper;
+use common\models\Content;
 use common\service\CategoryService;
 use common\service\ContentService;
 use Yii;
@@ -22,7 +23,7 @@ class ArticleController extends Controller
      */
     public function actionIndex()
     {
-        $id = (int)Yii::$app->request->get('id', 201);
+        $id = (int)Yii::$app->request->get('id', 203);
         $children = CategoryService::factory()->getChildCategories($id);
         $ids = array_keys($children);
         if ($ids) {
@@ -35,7 +36,7 @@ class ArticleController extends Controller
             'status' => Conf::ENABLE,
             'categoryID' => $ids,
             'order' => 'sort DESC,create_at DESC',
-        ]);
+        ],6);
 
         return $this->render('index',[
             'dataProvider' => $dataProvider
@@ -53,6 +54,7 @@ class ArticleController extends Controller
             throw new \InvalidArgumentException('illegal argument');
         }
 
+        Content::updateAllCounters(['hits' => 1],['id'=>$contentID]);
         $content = ContentService::factory()->getContent(['id' => $contentID]);
         return $this->render('view', [
             'content' => $content

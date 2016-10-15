@@ -32,6 +32,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'status')->radioList(['0' => '已审核', '1' => '未审核'])->label('状态') ?>
 
+    <?= $form->field($model, 'model_id')->hiddenInput(['value' => 1])->label(null)?>
+
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

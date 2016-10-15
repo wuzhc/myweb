@@ -48,7 +48,7 @@ WebAsset::register($this);
             <!-- end top links -->
             <div class="top_section">
                 <div class="container">
-                    <div id="logo"><a href="<?= Url::to(['article/index','id' => 201]) ?>" class="site_logo"><h1>welcome</h1></a></div><!-- end logo -->
+                    <div id="logo"><a href="<?= Url::to(['article/index']) ?>" class="site_logo"><h1>welcome</h1></a></div><!-- end logo -->
                     <nav id="access" class="access" role="navigation">
                         <div id="menu" class="menu">
                             <ul id="tiny">

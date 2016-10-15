@@ -9,6 +9,7 @@
 namespace common\service;
 
 
+use Yii;
 use common\helper\DebugHelper;
 use common\models\Content;
 use common\models\ArticleContent;
@@ -150,7 +151,28 @@ class ContentService extends AbstractService
         if (isset($args['limit'])) {
             $query->limit($args['limit']);
         }
+        if (isset($args['offset'])) {
+            $query->offset($args['offset']);
+        }
 
         return $query;
+    }
+
+
+    public function getLimitArticle($categoryIDs, $limit = 6)
+    {
+        $sql = "select a1.* from content a1
+                inner join
+                (select a.category_id,a.create_at from content a left join content b
+                on a.category_id=b.category_id and a.create_at<=b.create_at
+                group by a.category_id,a.create_at
+                having count(b.create_at)<= $limit
+                )b1
+                on a1.category_id=b1.category_id and a1.create_at=b1.create_at
+                WHERE a1.category_id IN ($categoryIDs) AND a1.status=0
+                order by a1.category_id,a1.create_at desc
+                ";
+        $data = Yii::$app->db->createCommand($sql)->queryAll();
+        return $data;
     }
 }
