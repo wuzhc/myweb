@@ -74,7 +74,7 @@ $this->beginPage() ?>
     <!-- header end -->
 
     <?= Html::jsFile('public/frontend/app/js/2014/m/tabbedContent.js')?>
-    <?= Html::jsFile('public/frontend/app/js/2014/m/jquery.mobile-1.0a4.1.min.js')?>
+    <?/*= Html::jsFile('public/frontend/app/js/2014/m/jquery.mobile-1.0a4.1.min.js')*/?>
 
     <?= $content; ?>
 

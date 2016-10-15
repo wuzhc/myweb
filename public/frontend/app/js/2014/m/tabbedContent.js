@@ -113,6 +113,6 @@ var TabbedContent = {
 
 $(document).ready(function() {
 	TabbedContent.init();
-	TabbedContent.init2();
-	TabbedContent.init3();
+	//TabbedContent.init2();
+	//TabbedContent.init3();
 });
