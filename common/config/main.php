@@ -5,6 +5,13 @@ return [
     'timeZone' => 'Asia/Shanghai',
     'defaultRoute' => 'article',
     'components' => [
+        'db' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=myweb',
+            'username' => 'root',
+            'password' => 'wuzhc2580',
+            'charset' => 'utf8',
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
