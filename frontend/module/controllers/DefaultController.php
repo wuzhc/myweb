@@ -25,7 +25,7 @@ class DefaultController extends Controller
                 $cats = CategoryService::factory()->getChildCategories($baseCID);
                 if ($cats) {
                     $catIDs = array_keys($cats);
-                    $data = ContentService::factory()->getLimitArticle(implode(',',$catIDs), 10);
+                    $data = ContentService::factory()->getLimitArticle(implode(',',$catIDs), 1);
                     $temp['cats'] = $cats;
                     $temp['articles'] = $this->_packData($data, $catIDs);
                     $return[] = $temp;
