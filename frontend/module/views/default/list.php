@@ -18,7 +18,7 @@ use yii\helpers\Url;
                     <?php } ?>
                     <div class="hidden" style="display:block;">
                     </div>
-                    <div class="more click_more" style="clear:both;">点击查看更多</div>
+                    <div class="more click_more" style="clear:both;" page-offset="10" data-cid="<?=$data->attributes['category_id']?>">点击查看更多</div>
                 </ul>
             </div>
             <?php } else { ?>

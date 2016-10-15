@@ -24,7 +24,7 @@ use yii\helpers\Url;
                                     <?php foreach((array)$articles as $a) { ?>
                                         <li><a href="<?= Url::to(['default/detail','id'=>$a['id']])?>"><?=$a['title']?></a><span><em>浏览 <?= $a['hits']?> 次</em><?= $a['create']?></span></li>
                                     <?php } ?>
-                                    <div class="more click_more" style="clear:both;" data-cid="<?=$catID?>">点击查看更多</div>
+                                    <div class="more click_more" style="clear:both;" data-cid="<?=$catID?>" page-offset="10">点击查看更多</div>
                                     <div class="hidden"></div>
                                 </ul>
                             <?php }else{?>
