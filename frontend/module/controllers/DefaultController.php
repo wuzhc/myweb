@@ -27,7 +27,7 @@ class DefaultController extends Controller
                     $catIDs = array_keys($cats);
                     $data = ContentService::factory()->getLimitArticle(implode(',',$catIDs), 10);
                     $temp['cats'] = $cats;
-                    $temp['articles'] = $this->_packData($data);
+                    $temp['articles'] = $this->_packData($data, $catIDs);
                     $return[] = $temp;
                 }
             }
@@ -75,9 +75,12 @@ class DefaultController extends Controller
      * @param $articles
      * @return array
      */
-    private function _packData($articles)
+    private function _packData($articles, $catIDs)
     {
         $data = [];
+        foreach ($catIDs as $cid) {
+            $data[$cid] = [];
+        }
 
         foreach ($articles as $article) {
             $temp['id'] = $article['id'];

@@ -12,20 +12,26 @@ use yii\helpers\Url;
                 <div class="tabs tabs3">
                     <div class="moving_bg">&nbsp;</div>
                     <?php foreach((array)$data['cats'] as $cid => $title) { ?>
-                        <a class="tab_item" href="<?= Url::to(['default/list','cid'=>$cid])?>"><?= $title;?></a>
+                        <span class="tab_item"><?= $title;?></span>
                     <?php } ?>
                 </div>
                 <div class="slide_content">
                     <div class="tabslider tabslider3" >
                         <div>&nbsp;</div>
                         <?php foreach((array)$data['articles'] as $catID=>$articles) { ?>
-                            <ul>
-                                <?php foreach((array)$articles as $a) { ?>
-                                    <li><a href="<?= Url::to(['default/detail','id'=>$a['id']])?>"><?=$a['title']?></a><span><em>浏览 <?= $a['hits']?> 次</em><?= $a['create']?></span></li>
-                                <?php } ?>
-                                <div class="more click_more" style="clear:both;" data-cid="<?=$catID?>">点击查看更多</div>
-                                <div class="hidden"></div>
-                            </ul>
+                            <?php if($articles) { ?>
+                                <ul>
+                                    <?php foreach((array)$articles as $a) { ?>
+                                        <li><a href="<?= Url::to(['default/detail','id'=>$a['id']])?>"><?=$a['title']?></a><span><em>浏览 <?= $a['hits']?> 次</em><?= $a['create']?></span></li>
+                                    <?php } ?>
+                                    <div class="more click_more" style="clear:both;" data-cid="<?=$catID?>">点击查看更多</div>
+                                    <div class="hidden"></div>
+                                </ul>
+                            <?php }else{?>
+                                <ul>
+                                    <div class="" style="clear:both;"><article style="text-align: center">暂无内容！</article></div>
+                                </ul>
+                            <?php } ?>
                         <?php } ?>
                     </div>
                     <br style="clear:both" />

@@ -133,8 +133,8 @@ class ArticleController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        if ($model->body) {
-            $model->body->delete();
+        if ($model->article) {
+            $model->article->delete();
         }
         $model->delete();
 
