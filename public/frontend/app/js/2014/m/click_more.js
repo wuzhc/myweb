@@ -23,7 +23,7 @@ $(function(){
 					return ;
 				}
 				$this.prev("li").append(data);
-				offset = offset+1;
+				offset = offset+10;
 				$this.html('点击查看更多');
 			}
 		});
