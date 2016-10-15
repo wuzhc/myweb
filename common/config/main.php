@@ -5,11 +5,15 @@ return [
     'timeZone' => 'Asia/Shanghai',
     'defaultRoute' => 'article',
     'components' => [
+        'request' => [
+            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+            'cookieValidationKey' => 'TRvyZcHFusQV31-jHjz2BbWxTD8QryuU',
+        ],
         'db' => [
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=myweb',
             'username' => 'root',
-            'password' => 'wuzhc2580',
+            'password' => '',
             'charset' => 'utf8',
         ],
         'cache' => [
