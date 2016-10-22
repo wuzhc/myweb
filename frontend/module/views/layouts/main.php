@@ -24,6 +24,7 @@ $this->beginPage() ?>
         <?= Html::jsFile('public/frontend/app/js/2014/m/css3-mediaqueries.js')?>
         <![endif]-->
         <?= Html::jsFile('public/frontend/app/js/2014/m/jquery-1.5.min.js')?>
+        <?= Html::jsFile('public/frontend/app/js/2014/m/common.js')?>
         <?= Html::jsFile('public/frontend/app/js/2014/m/list.js')?>
         <?= Html::jsFile('public/frontend/app/js/2014/m/click_more.js')?>
         <?= Html::jsFile('public/frontend/app/js/2014/m/top.js')?>

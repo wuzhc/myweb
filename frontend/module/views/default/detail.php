@@ -2,10 +2,13 @@
 use yii\helpers\Url;
 ?>
 <article>
-    <h2><?=$content->title?></h2>
+    <div style="text-align: center">
+        <h2><?=$content->title?></h2>
+    </div>
 
     <div class="time_source">
-        <span>时间：<?= date('Y-m-d H:i:s', $content->create_at)?></span>来源：wuzhc博客		</div>
+        <span>时间：<?= date('Y-m-d H:i:s', $content->create_at)?></span>游览：<?php echo $content->hits; ?>
+    </div>
     <div class="content">
         <?= $content->article->content;?>
     </div>
