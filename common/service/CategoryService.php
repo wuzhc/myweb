@@ -131,13 +131,19 @@ class CategoryService extends AbstractService
 
     /**
      * @param $parentID
+     * @param bool $isReturnCustomUrlNav 是否返回自定义链接的导航
      * @return array
      */
-    public function getChildCategories($parentID)
+    public function getChildCategories($parentID, $isReturnCustomUrlNav = true)
     {
         $return = [];
         $categories = $this->getCategories(['parent' => $parentID,'order'=>'sort Desc']);
         foreach ($categories as $k => $category) {
+            if ($isReturnCustomUrlNav == false) {
+                if ($category->url) {
+                    continue;
+                }
+            }
             $return[$k]['id'] = $category->id;
             $return[$k]['url'] = $category->url;
             $return[$k]['title'] = $category->title;

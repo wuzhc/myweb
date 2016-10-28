@@ -32,4 +32,5 @@ class Conf
     const CAT_BACKEND = 2; //后端分类
     const CAT_DATABASE = 3; //数据库分类
     const CAT_SERVER = 4; //服务器分类
+    const CAT_ALGORITHM = 5; //数据结构和算法
 }

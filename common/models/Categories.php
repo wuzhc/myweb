@@ -16,6 +16,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $parent
  * @property string $title
  * @property string $model_id
+ * @property string $url
  * @property integer $sort
  * @property integer $level
  * @property integer $path
@@ -40,7 +41,7 @@ class Categories extends ActiveRecord
         return [
             [['title'], 'required'],
             [['title'], 'string', 'max' => 100],
-            [['id', 'model_id', 'parent', 'sort', 'path', 'level', 'status', 'create_at','title'], 'safe'],
+            [['id', 'url', 'model_id', 'parent', 'sort', 'path', 'level', 'status', 'create_at','title'], 'safe'],
         ];
     }
 
@@ -73,6 +74,7 @@ class Categories extends ActiveRecord
             'status' => Yii::t('common\message', 'Status'),
             'level' => Yii::t('common\message', 'level'),
             'path' => Yii::t('common\message', 'path'),
+            'url' => Yii::t('common\message', 'url'),
             'create_at' => Yii::t('common\message', 'Create At'),
         ];
     }

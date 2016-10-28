@@ -21,6 +21,8 @@ $categories[0] = '顶级大类';
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true])->label('名称') ?>
 
+    <?= $form->field($model, 'url')->textInput(['maxlength' => true])->label('自定义链接') ?>
+
     <?= $form->field($model, 'model_id')->dropDownList(CategoryService::factory()->getModels())->label('模型')?>
 
     <?= $form->field($model, 'sort')->textInput(['value' => 0])->label('排序') ?>

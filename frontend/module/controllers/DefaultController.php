@@ -8,6 +8,7 @@ use common\models\Content;
 use common\service\CategoryService;
 use common\service\ContentService;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\Controller;
 
@@ -22,9 +23,9 @@ class DefaultController extends Controller
         if ($baseCatIDs) {
             foreach ($baseCatIDs as $baseCID) {
                 $temp = [];
-                $cats = CategoryService::factory()->getChildCategories($baseCID);
+                $cats = CategoryService::factory()->getChildCategories($baseCID, false);
                 if ($cats) {
-                    $catIDs = array_keys($cats);
+                    $catIDs = ArrayHelper::getColumn($cats,'id');
                     $data = ContentService::factory()->getLimitArticle(implode(',',$catIDs), 8);
                     $temp['cats'] = $cats;
                     $temp['articles'] = $this->_packData($data, $catIDs);
@@ -32,7 +33,6 @@ class DefaultController extends Controller
                 }
             }
         }
-        //print_r($return);exit;
         return $this->render('index', ['datas' => $return]);
     }
 
@@ -45,7 +45,8 @@ class DefaultController extends Controller
         $cid = (int)Yii::$app->request->get('cid');
         $dataProvider = ContentService::factory()->getContents([
             'categoryID' => $cid,
-            'status' => Conf::ENABLE
+            'status' => Conf::ENABLE,
+            'order' => 'id DESC',
         ],10);
 
         return $this->render('list', [

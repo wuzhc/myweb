@@ -25,7 +25,7 @@ $(function(){
 					$this.attr("more", 1);
 					return ;
 				}
-				$this.prev("li").append(data);
+				$this.prev("li").after(data);
 				offset = offset+10;
 				$this.attr("page-offset", offset);
 				$this.html('点击查看更多');
