@@ -26,7 +26,7 @@ class DefaultController extends Controller
                 $cats = CategoryService::factory()->getChildCategories($baseCID, false);
                 if ($cats) {
                     $catIDs = ArrayHelper::getColumn($cats,'id');
-                    $data = ContentService::factory()->getLimitArticle(implode(',',$catIDs), 8);
+                    $data = ContentService::factory()->getLimitArticle(implode(',',$catIDs), 10);
                     $temp['cats'] = $cats;
                     $temp['articles'] = $this->_packData($data, $catIDs);
                     $return[] = $temp;
@@ -112,7 +112,7 @@ class DefaultController extends Controller
                 'offset' => $offset,
                 'limit' => 10,
                 'status' => Conf::ENABLE,
-                'order' => 'create_at DESC'
+                'order' => 'id DESC'
             ])->all()
         ]);
     }
