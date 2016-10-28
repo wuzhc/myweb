@@ -1,5 +1,5 @@
 <?php use yii\helpers\Url;
 
 foreach((array)$datas as $data) { ?>
-    <li><a href="<?= Url::to(['default/detail','id'=>$data->id])?>"><?= $data->title?></a><span><em>浏览 <?= $data->hits?> 次</em><?= date('Y-m-d H:i:s',$data->create_at)?></span></li>
+    <li><a href="<?= Url::to(['default/detail','id'=>$data->id])?>"><?= $data->title?></a><span><em>浏览 <?= $data->hits?> 次</em><?= date('Y-m-d',$data->create_at)?></span></li>
 <?php } ?>
