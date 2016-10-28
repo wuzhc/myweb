@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Url;
+$this->title = 'Learning Record';
 ?>
 <section class="clear">
 
@@ -9,10 +10,10 @@ use yii\helpers\Url;
         <!-- begin -->
         <?php if ($data['cats'] && $data['articles']) { ?>
             <div class="tabbed_content">
-                <div class="tabs tabs3">
+                <div class="tabs tabs2">
                     <div class="moving_bg">&nbsp;</div>
-                    <?php foreach((array)$data['cats'] as $cid => $title) { ?>
-                        <span class="tab_item"><?= $title;?></span>
+                    <?php foreach((array)$data['cats'] as $cat) { ?>
+                        <span class="tab_item"><?= $cat['title'];?></span>
                     <?php } ?>
                 </div>
                 <div class="slide_content">

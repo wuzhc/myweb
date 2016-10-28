@@ -53,7 +53,9 @@ class CategoryService extends AbstractService
         if ($args['limit']) {
             $category->limit($args['limit']);
         }
-        return $category->orderBy('path asc')->all();
+
+        $order = $args['order'] ?: 'path asc';
+        return $category->orderBy($order)->all();
     }
 
     /**
@@ -133,8 +135,14 @@ class CategoryService extends AbstractService
      */
     public function getChildCategories($parentID)
     {
-        $categories = $this->getCategories(['parent' => $parentID]);
-        return ArrayHelper::map($categories, 'id', 'title');
+        $return = [];
+        $categories = $this->getCategories(['parent' => $parentID,'order'=>'sort Desc']);
+        foreach ($categories as $k => $category) {
+            $return[$k]['id'] = $category->id;
+            $return[$k]['url'] = $category->url;
+            $return[$k]['title'] = $category->title;
+        }
+        return $return;
     }
 
 }

@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Url;
+$this->title = $catName;
 ?>
 <section class="clear">
 

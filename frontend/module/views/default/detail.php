@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Url;
+$this->title = $content->title;
 ?>
 <article>
     <div style="text-align: center">

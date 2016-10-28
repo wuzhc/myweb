@@ -8,9 +8,7 @@ $this->beginPage() ?>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
-        <title>wuzhc博客</title>
-        <meta name="description" content="wuzhc博客" />
-        <meta name="keywords" content="wuzhc博客" />
+        <title><?php echo Html::encode($this->title);?></title>
         <?= Html::cssFile('public/frontend/app/css/2014/m/style131017.css')?>
         <!-- media queries css -->
         <?= Html::cssFile('public/frontend/app/css/2014/m/media_queries.css')?>
@@ -54,7 +52,7 @@ $this->beginPage() ?>
             <div class="loc_logo_navbtn">
                 <div class="loc_logo">
                     <div class="logo">
-                        <h1><a href="<?= Url::to(['default/index'])?>">wuzhc博客</a></h1>
+                        <h1><a href="<?= Url::to(['default/index'])?>">Learning Record</a></h1>
                     </div>
                 </div>
                 <div class="navbtn" id="navbtn"></div>
@@ -63,8 +61,12 @@ $this->beginPage() ?>
                 <ul>
                     <?php $baseCatIDs = array_keys(Yii::$app->params['baseCats']);?>
                     <?php $cats = \common\service\CategoryService::factory()->getChildCategories($baseCatIDs)?>
-                    <?php foreach((array)$cats as $cid => $title) { ?>
-                    <li><a href="<?= Url::to(['default/list','cid'=>$cid])?>"><?= $title?></a></li>
+                    <?php foreach((array)$cats as $cat) { ?>
+                        <?php if ($cat['url']) { ?>
+                            <li><a href="<?= $cat['url'];?>"><?= $cat['title']?></a></li>
+                        <?php } else { ?>
+                            <li><a href="<?= Url::to(['default/list','cid'=>$cat['id']])?>"><?= $cat['title']?></a></li>
+                        <?php } ?>
                     <?php } ?>
                     <div class="clear"></div>
                 </ul>
