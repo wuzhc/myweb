@@ -88,7 +88,7 @@ class DefaultController extends Controller
             $temp['cid'] = $article['category_id'];
             $temp['title'] = $article['title'];
             $temp['hits'] = $article['hits'];
-            $temp['create'] = date('Y-m-d H:i:s', $article['create_at']);
+            $temp['create'] = date('Y-m-d', $article['create_at']);
             $data[$article['category_id']][] = $temp;
         }
 

@@ -8,7 +8,7 @@ $this->title = $content->title;
     </div>
 
     <div class="time_source">
-        <span>时间：<?= date('Y-m-d H:i:s', $content->create_at)?></span>游览：<?php echo $content->hits; ?>
+        <span>时间：<?= date('Y-m-d', $content->create_at)?></span>游览：<?php echo $content->hits; ?>
     </div>
     <div class="content">
         <?= $content->article->content;?>

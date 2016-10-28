@@ -15,7 +15,7 @@ $this->title = $catName;
                 <div>&nbsp;</div>
                 <ul class="data-list">
                     <?php foreach((array)$datas as $data) { ?>
-                        <li><a href="<?= Url::to(['default/detail','id'=>$data->attributes['id']])?>"><?= $data->attributes['title']?></a><span><em>浏览 <?= $data->attributes['hits']?> 次</em><?= date('Y-m-d H:i:s',$data->attributes['create_at'])?></span></li>
+                        <li><a href="<?= Url::to(['default/detail','id'=>$data->attributes['id']])?>"><?= $data->attributes['title']?></a><span><em>浏览 <?= $data->attributes['hits']?> 次</em><?= date('Y-m-d',$data->attributes['create_at'])?></span></li>
                     <?php } ?>
                     <div class="more click_more" style="clear:both;" page-offset="10" data-cid="<?=$data->attributes['category_id']?>">点击查看更多</div>
                 </ul>
