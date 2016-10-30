@@ -15,10 +15,11 @@ WebAsset::register($this);
         <meta name="keywords" content="" />
         <meta name="description" content="" />
 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <!-- Favicon -->
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
         <!-- this styles only adds some repairs on idevices  -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
 
         <!--[if lt IE 9]>
         <script src="js/html5.js"></script>
@@ -48,7 +49,7 @@ WebAsset::register($this);
             <!-- end top links -->
             <div class="top_section">
                 <div class="container">
-                    <div id="logo"><a href="<?= Url::to(['article/index']) ?>" class="site_logo"><h1>welcome</h1></a></div><!-- end logo -->
+                    <div id="logo"><a href="<?= Url::to(['article/index']) ?>" class="site_logo"><h1>Learning Record</h1></a></div><!-- end logo -->
                     <nav id="access" class="access" role="navigation">
                         <div id="menu" class="menu">
                             <ul id="tiny">
