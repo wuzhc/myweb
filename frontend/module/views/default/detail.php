@@ -1,7 +1,17 @@
 <?php
 use yii\helpers\Url;
+use yii\helpers\Html;
+
 $this->title = $content->title;
 ?>
+<?php echo Html::cssFile('public/common/highlightJS/styles/hopscotch.css')?>
+<?php echo Html::jsFile('public/common/highlightJS/highlight.pack.js')?>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!--<link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">
+<script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+<script >hljs.initHighlightingOnLoad();</script>-->
+
 <article>
     <div style="text-align: center">
         <h2><?=$content->title?></h2>
