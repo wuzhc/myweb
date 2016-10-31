@@ -20,7 +20,7 @@ if (is_array($baseCats)) {
         $menuItems[$key]['label'] = $cat->title;
         $menuItems[$key]['url'] = $cat->url ?: array('article/index','parentID'=>$cat->id);
         if ($i == 0 && !$_GET['parentID']) {
-            $menuItems[$id]['active'] = true;
+            $menuItems[$key]['active'] = true;
         }
         $i++;
     }

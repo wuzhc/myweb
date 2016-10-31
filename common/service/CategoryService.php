@@ -32,7 +32,7 @@ class CategoryService extends AbstractService
     public function getCategories($args = array())
     {
         $category = Categories::find();
-        if ($args['parent']) {
+        if (isset($args['parent'])) {
             $category->andFilterWhere(['parent' => $args['parent']]);
         }
         if ($args['title']) {
