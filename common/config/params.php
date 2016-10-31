@@ -19,6 +19,6 @@ return [
         Conf::CAT_SERVER => '服务器',
         Conf::CAT_FRONTEND => '前端',
         Conf::CAT_ALGORITHM => '编程之道',
-        Conf::CAT_GITHUB => '编程之道',
+        Conf::CAT_GITHUB => 'GitHub',
     ],
 ];
