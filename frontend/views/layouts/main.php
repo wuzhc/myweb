@@ -14,9 +14,14 @@ $menuItems = array();
 $baseCats = Yii::$app->params['baseCats'];
 
 if (is_array($baseCats)) {
+    $i = 0;
     foreach ($baseCats as $id => $name) {
         $menuItems[$id]['label'] = $name;
         $menuItems[$id]['url'] = array('article/index','parentID'=>$id);
+        if ($i == 0 && !$_GET['parentID']) {
+            $menuItems[$id]['active'] = true;
+        }
+        $i++;
     }
 }
 AppAsset::register($this);

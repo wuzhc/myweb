@@ -3,7 +3,17 @@
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
+
 ?>
+
+<form action="<?php echo Url::to(['article/search'])?>" method="post" id="form-search">
+    <div class="input-group" style="margin-bottom: 20px">
+        <input type="hidden" name="_csrf" value="<?= Yii::$app->request->getCsrfToken()?>">
+        <input type="text" name="keyword" class="form-control input-lg" onkeydown="onKeyDown(event)" placeholder="搜索"/>
+        <span class="input-group-addon btn btn-primary" id="search-article">搜索</span>
+    </div>
+</form>
+
 <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading">最新动态</div>

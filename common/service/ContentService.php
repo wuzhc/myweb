@@ -142,6 +142,9 @@ class ContentService extends AbstractService
         if (isset($args['status'])) {
             $query->andFilterWhere(['status' => $args['status']]);
         }
+        if (isset($args['keyword'])) {
+            $query->andFilterWhere(['like','title',$args['keyword']]);
+        }
         if (isset($args['order'])) {
             $query->addOrderBy($args['order']);
         }

@@ -83,6 +83,23 @@ class ArticleController extends Controller
         ]);
     }
 
+    /**
+     * 搜索页面
+     * @return string
+     */
+    public function actionSearch()
+    {
+        $keyword = strip_tags(trim($_POST['keyword']));
+        $articles = ContentService::factory()->getContents(array(
+            'status' => Conf::ENABLE,
+            'order' => 'sort Desc, id Desc',
+            'keyword' => $keyword
+        ),10);
+        return $this->render('search',array(
+            'articles' => $articles,
+        ));
+    }
+
     public function actionSummary()
     {
         $cnts = Content::find()->all();
