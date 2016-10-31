@@ -90,7 +90,7 @@ class ArticleController extends Controller
             if (!($body = ArticleContent::findOne(['content_id'=>$cnt->id]))) {
                 continue;
             }
-            $cnt->summary = StringHelper::truncate(strip_tags($body->content),150);
+            $cnt->summary = StringHelper::truncate(strip_tags($body->content),120);
             if ($cnt->save()) {
                 echo $cnt->id . 'success<br>';
             } else {

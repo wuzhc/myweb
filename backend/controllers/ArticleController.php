@@ -2,13 +2,11 @@
 
 namespace backend\controllers;
 
-use common\behavior\ContentBehavior;
-use common\helper\DebugHelper;
 use common\models\Content;
 use common\service\ContentService;
 use Yii;
-use common\models\Article;
 use backend\models\AricleSearch;
+use yii\helpers\StringHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -72,6 +70,10 @@ class ArticleController extends Controller
             $fileInstance = UploadedFile::getInstance($model, 'image_url');
             if ($fileInstance && ($filePath = $model->upload($fileInstance))) {
                 $model->image_url = $filePath;
+            }
+
+            if (!$model->summary) {
+                $model->summary = StringHelper::truncate(strip_tags($model->content),120);
             }
 
             if ($model->save()) {

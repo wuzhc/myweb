@@ -83,11 +83,10 @@ AppAsset::register($this);
     </div>
 </div>
 
-<footer class="footer">
+<footer class="footer" style="margin-top: 20px">
     <div class="container">
-        <p class="pull-left">&copy; Learning Record <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-left">&copy; Learning Record <?= date('Y') ?> by wuzhc</p>
+        <p class="pull-right"><a href="https://github.com/wuzhc">https://github.com/wuzhc</a></p>
     </div>
 </footer>
 
