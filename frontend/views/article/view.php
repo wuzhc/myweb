@@ -2,56 +2,27 @@
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 $this->title = $content->title;
+$this->params['breadcrumbs'][] = array('label'=>$category->title,'url'=>['article/index','cid'=>$category->id,'parentID'=>$category->parent]);
+$this->params['breadcrumbs'][] = $content->title;
 ?>
+
+<?php echo Html::cssFile('public/common/highlightJS/styles/github.css')?>
+<?php $this->registerJsFile('@web/public/common/highlightJS/highlight.pack.js',['depends' => \yii\web\JqueryAsset::className()])?>
+<?php $this->beginBlock('jquery') ?>
+    hljs.initHighlightingOnLoad();
+<?php $this->endBlock() ?>
+<?php $this->registerJs($this->blocks['jquery'], \yii\web\View::POS_END); ?>
+
 <div class="container">
-    <div class="content_fullwidth">
-        <div class="one_full">
-            <div class="big_text2" style="font-size: 18px; text-align: center; color: #0A0; font-weight: bold">
-                <?= Html::encode($content->title) ?>
-            </div>
-            <br />
-            <div>
-            <?= $content->article->content ?>
-            </div>
-        </div><!-- end section -->
+    <div>
+        <p style="font-size: 24px; text-align: center; color: #000000; font-weight: bold">
+            <?php echo Html::encode($content->title) ?>
+        </p>
+        <p>游览数：<?php echo $content->hits;?>&nbsp;&nbsp;&nbsp;&nbsp;发布日期：<?php echo date('Y-m-d', $content->create_at)?></p>
+        <br />
+        <p>
+        <?php echo $content->article->content?>
+        </p>
     </div>
-    <div class="clearfix mar_top4"></div>
-    <h4>评论</h4>
-    <div class="mar_top_bottom_lines_small3"></div>
-    <!--start comment-->
-    <div class="comment_wrap">
-        <div class="gravatar"><img src="/public/frontend/images/blog/people_img.jpg" alt="" /></div>
-        <div class="comment_content">
-            <div class="comment_meta">
-                <div class="comment_author">游客 <i>2016-05-21</i></div>
-            </div>
-            <div class="comment_text">
-                <p>写的这是什么几把玩意儿啊，我们都看不懂</p>
-            </div>
-        </div>
-    </div>
-    <!--end comment-->
-    <!--start comment-->
-    <div class="comment_wrap">
-        <div class="gravatar"><img src="/public/frontend/images/blog/people_img.jpg" alt="" /></div>
-        <div class="comment_content">
-            <div class="comment_meta">
-                <div class="comment_author">游客 <i>2016-05-21</i></div>
-            </div>
-            <div class="comment_text">
-                <p>写的这是什么几把玩意儿啊，我们都看不懂</p>
-            </div>
-        </div>
-    </div>
-    <!--end comment-->
-    <div class="comment_form">
-        <h4>发表你内心的感受吧</h4>
-        <?php $model = new \common\models\Content()?>
-        <?= \common\widgets\SimditorWidget::widget(['model' => $model])?>
-
-    </div><!-- end comment form -->
 </div>
-<div class="clearfix mar_top4"></div>
 
-
-<div class="clearfix mar_top2"></div>

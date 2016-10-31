@@ -175,4 +175,23 @@ class ContentService extends AbstractService
         $data = Yii::$app->db->createCommand($sql)->queryAll();
         return $data;
     }
+
+    /**
+     * 获取上下篇文章
+     * @param string $flag 标识 prev|next
+     * @param int $currentID 当前ID
+     * @param int $cid 所属分类
+     * @return array|false
+     * @since 2016-10-31
+     */
+    public function getPrevOrNextArticle($flag, $currentID, $cid)
+    {
+        if ($flag != 'prev' || $flag != 'next') {
+            return array();
+        }
+
+        list($operator, $sort) = $flag == 'prev' ? array('<', 'DESC') : array('>', 'deSC');
+        $sql = sprintf('SELECT id,title FROM content WHERE id %s :id AND category_id = :cid ORDER BY id %s LIMIT 1', $operator, $sort);
+        return Yii::$app->db->createCommand($sql, array(':id'=>$currentID,':cid'=>$cid))->queryOne();
+    }
 }

@@ -45,6 +45,5 @@ class UserController extends Controller
         }
 
         echo '创建成功' . "\n";
-
     }
 }
