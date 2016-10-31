@@ -9,15 +9,16 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use common\service\CategoryService;
 
 $menuItems = array();
-$baseCats = Yii::$app->params['baseCats'];
+$baseCats = CategoryService::factory()->getCategories(array('parent'=>0,'order'=>'sort desc'));
 
 if (is_array($baseCats)) {
     $i = 0;
-    foreach ($baseCats as $id => $name) {
-        $menuItems[$id]['label'] = $name;
-        $menuItems[$id]['url'] = array('article/index','parentID'=>$id);
+    foreach ($baseCats as $key => $cat) {
+        $menuItems[$key]['label'] = $cat->title;
+        $menuItems[$key]['url'] = $cat->url ?: array('article/index','parentID'=>$cat->id);
         if ($i == 0 && !$_GET['parentID']) {
             $menuItems[$id]['active'] = true;
         }
