@@ -18,6 +18,6 @@ return [
         Conf::CAT_DATABASE => '数据库',
         Conf::CAT_SERVER => '服务器',
         Conf::CAT_FRONTEND => '前端',
-        Conf::CAT_ALGORITHM => '数据结构和算法'
+        Conf::CAT_ALGORITHM => '编程之道'
     ],
 ];
