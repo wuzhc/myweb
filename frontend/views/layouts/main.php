@@ -21,6 +21,8 @@ if (is_array($baseCats)) {
         $menuItems[$key]['url'] = $cat->url ?: array('article/index','parentID'=>$cat->id);
         if ($i == 0 && !$_GET['parentID']) {
             $menuItems[$key]['active'] = true;
+        } elseif ($_GET['parentID'] == $cat->id) {
+            $menuItems[$key]['active'] = true;
         }
         $i++;
     }

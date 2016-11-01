@@ -7,7 +7,7 @@ use yii\helpers\StringHelper;
 <div class="media-body">
     <h4 class="media-heading" style="font-weight: bold">
         <span class="glyphicon glyphicon-link" style="margin-right: 10px;color: #337ab7"></span>
-        <?php echo Html::a(StringHelper::truncate(Html::encode($model->title), 35),['article/view','id'=>$model->id],['style'=>array('color'=>'#000000')])?>
+        <?php echo Html::a(StringHelper::truncate(Html::encode($model->title), 35),['article/view','id'=>$model->id,'parentID'=>$_GET['parentID']],['style'=>array('color'=>'#000000')])?>
     </h4>
     <p style="font-size: 12px;color: #777">
         <span class="glyphicon glyphicon-eye-open"></span>：<?php echo $model->hits;?>
