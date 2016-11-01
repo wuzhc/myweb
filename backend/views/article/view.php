@@ -31,29 +31,29 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'title',
-            'summary:ntext',
+            /*'summary:ntext',
             [
                 'label' => '作者',
                 'attribute' => 'author.username',
-            ],
+            ],*/
             [
                 'label' => '所属类别',
                 'attribute' => 'category.title',
             ],
-            [
+            /*[
                 'label' => '缩列图',
                 'attribute' => 'image_url',
                 'format' => 'html',
                 'value' => Html::img(\common\helper\ImageHelper::thumb($model->image_url))
-            ],
-            'hits',
-            'comments',
+            ],*/
+            /*'hits',
+            'comments',*/
             'sort',
-            [
+            /*[
                 'label' => '状态',
                 'attribute' => 'status',
                 'value' => $model->status === 0 ? '已审核' : '未审核',
-            ],
+            ],*/
             'create_at:datetime:创建日期',
         ],
     ]) ?>
