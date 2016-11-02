@@ -100,7 +100,6 @@ class ArticleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->content = $model->article->content;
 
         if ($model->load(Yii::$app->request->post())) {
 
@@ -109,6 +108,10 @@ class ArticleController extends Controller
                 $model->image_url = $filePath;
             } else {
                 unset($model->image_url);
+            }
+
+            if (!$model->summary) {
+                $model->summary = StringHelper::truncate(strip_tags($model->content),120);
             }
 
             if ($model->save()) {
@@ -120,6 +123,7 @@ class ArticleController extends Controller
 
         }
 
+        $model->content = $model->article->content;
         return $this->render('update', [
             'model' => $model,
         ]);
