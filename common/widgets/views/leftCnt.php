@@ -67,7 +67,7 @@ use yii\helpers\Url;
                     <?php } ?>
 
                     <a href="<?php echo Url::to(['article/view','id'=>$article->id])?>">
-                        <?php echo Html::encode(StringHelper::truncate($article->title,24))?>
+                        <?php echo Html::encode(StringHelper::truncate($article->title,22))?>
                     </a>
                     <span class="badge"><?php echo $article->hits; ?></span>
                 </li>
