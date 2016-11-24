@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $content->title;
             <?php echo Html::encode($content->title) ?>
         </p>
         <p><span class="glyphicon glyphicon-eye-open"></span>：<?php echo $content->hits;?>&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-calendar"></span>：<?php echo date('Y-m-d', $content->create_at)?>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-cog"></span>：<a href="./admin.php?r=article/update&id=<?php echo $content->id?>">
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-cog"></span>：<a href="./admin.php?r=article/update&id=<?php echo $content->id?>">edit</a>
         </p>
         <br />
         <p>
