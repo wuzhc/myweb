@@ -18,7 +18,9 @@ $this->params['breadcrumbs'][] = $content->title;
         <p style="font-size: 24px; text-align: center; color: #000000; font-weight: bold">
             <?php echo Html::encode($content->title) ?>
         </p>
-        <p>游览数：<?php echo $content->hits;?>&nbsp;&nbsp;&nbsp;&nbsp;发布日期：<?php echo date('Y-m-d', $content->create_at)?></p>
+        <p><span class="glyphicon glyphicon-eye-open"></span>：<?php echo $content->hits;?>&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-calendar"></span>：<?php echo date('Y-m-d', $content->create_at)?>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-cog"></span>：<a href="./admin.php?r=article/update&id=<?php echo $content->id?>">
+        </p>
         <br />
         <p>
         <?php echo $content->article->content?>
