@@ -269,6 +269,6 @@ class ArticleController extends Controller
             @fclose($out);
         }
 
-        echo Yii::$app->request->hostInfo . '/' . $uploadDir. '/'. $fileName;
+        echo './' . $uploadDir. '/'. $fileName;
     }
 }
