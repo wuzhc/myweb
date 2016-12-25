@@ -18,7 +18,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'summary')->textarea(['rows' => 6])->label('简述') ?>
 
-    <?= \common\widgets\SimditorWidget::widget(['model' => $model])?>
+    <?/*= \common\widgets\SimditorWidget::widget(['model' => $model])*/?>
+    <?= \common\widgets\WangEditorWidget::widget(['model' => $model])?>
 
     <?= $form->field($model, 'category_id')->dropDownList(CategoryService::factory()->getCategoriesMap(['model_id' => Conf::ARTICLE_MODEL])) ?>
 
