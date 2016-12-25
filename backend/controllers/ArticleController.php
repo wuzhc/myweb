@@ -165,9 +165,10 @@ class ArticleController extends Controller
     }
 
     /**
-     *
+     * Upload image for WangEditor
+     * @since 2016-12-25
      */
-    public function actionUploadToWangEditor()
+    public function actionUploadImgForWangEditor()
     {
         $targetDir = 'uploads/upload_tmp';
         $uploadDir = 'uploads/wangEditor/' . date('Y-m-d');
