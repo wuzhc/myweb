@@ -51,7 +51,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Learning Record',
+        'brandLabel' => 'Code Demo',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse',
@@ -93,7 +93,7 @@ AppAsset::register($this);
 
 <footer class="footer" style="margin-top: 20px">
     <div class="container">
-        <p class="pull-left">&copy; Learning Record <?= date('Y') ?> by wuzhc</p>
+        <p class="pull-left">&copy; Code Demo <?= date('Y') ?> by wuzhc</p>
         <p class="pull-right"></p>
     </div>
 </footer>

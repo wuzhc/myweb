@@ -52,7 +52,7 @@ $this->beginPage() ?>
             <div class="loc_logo_navbtn">
                 <div class="loc_logo">
                     <div class="logo">
-                        <h1><a href="<?= Url::to(['default/index'])?>">Learning Record</a></h1>
+                        <h1><a href="<?= Url::to(['default/index'])?>">Code Demo</a></h1>
                     </div>
                 </div>
                 <div class="navbtn" id="navbtn"></div>

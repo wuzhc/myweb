@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\widgets\ListView;
 use yii\helpers\Url;
-$this->title = 'Learning Record';
+$this->title = 'Code Demo';
 
 if (is_array($cats)) {
     foreach ($cats as $cat) {

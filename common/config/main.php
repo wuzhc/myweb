@@ -13,7 +13,7 @@ return [
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=myweb',
             'username' => 'root',
-            'password' => '',
+            'password' => 'wuzhc2580',
             'charset' => 'utf8',
         ],
         'cache' => [
