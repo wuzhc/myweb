@@ -5,6 +5,7 @@
 namespace common\widgets;
 
 
+use Yii;
 use yii\base\Widget;
 use yii\helpers\Html;
 use yii\web\JqueryAsset;
@@ -31,15 +32,17 @@ class WangEditorWidget extends Widget
             '$("document").ready(function(){
                 var editor = new wangEditor("editor-trigger");
 
+                // 阻止输出log
+                wangEditor.config.printLog = false;
+
                 // 上传图片
-                editor.config.uploadImgUrl = "./admin.php?r=attr/upload-to-wang-editor";
+                editor.config.uploadImgUrl = "./admin.php?r=article/upload-to-wang-editor";
                 editor.config.uploadParams = {
-                                // token1: "abcde",
-                                // token2: "12345"
-                            };
+                    _csrf: "'.Yii::$app->request->getCsrfToken().'",
+                };
                 editor.config.uploadHeaders = {
-                                // "Accept" : "text/x-json"
-                            }
+                    // "Accept" : "text/x-json"
+                }
                 editor.config.uploadImgFileName = "file";
 
                 // 隐藏网络图片
@@ -140,6 +143,9 @@ class WangEditorWidget extends Widget
                 //     normal: "<button style=\"font-size:20px; margin-top:5px;\">I</button>",
                 //     selected: "<button style=\"font-size:20px; margin-top:5px;\"><i>I</i></button>"
                 // };
+
+                //插入代码默认语言
+                editor.config.codeDefaultLang = "php";
                 editor.create();
             });'
         );
