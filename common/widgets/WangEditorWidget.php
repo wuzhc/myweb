@@ -36,7 +36,7 @@ class WangEditorWidget extends Widget
                 wangEditor.config.printLog = false;
 
                 // 上传图片
-                editor.config.uploadImgUrl = "./admin.php?r=article/upload-to-wang-editor";
+                editor.config.uploadImgUrl = "./admin.php?r=article/upload-img-for-wang-editor";
                 editor.config.uploadParams = {
                     _csrf: "'.Yii::$app->request->getCsrfToken().'",
                 };
