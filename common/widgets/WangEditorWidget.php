@@ -126,7 +126,7 @@ class WangEditorWidget extends Widget
                 // editor.config.jsFilter = false;
 
                 // 取消粘贴过来
-                // editor.config.pasteFilter = false;
+                editor.config.pasteFilter = false;
 
                 // 设置 z-index
                 // editor.config.zindex = 20000;
