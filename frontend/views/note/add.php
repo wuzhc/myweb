@@ -45,7 +45,7 @@ $this->title = '问题记录';
     <div class="col-xs-6 col-md-4">
         <br>
         <?php $form = ActiveForm::begin(['action' => ['note/add'],'method'=>'post',]); ?>
-        <?= $form->field($model, 'content')->textarea()->label('问题描述') ?>
+        <?= $form->field($model, 'content')->textarea(['style'=>'width:100%'])->label('问题描述') ?>
         <?= Html::submitButton('提交问题', ['class'=>'btn btn-default','name' =>'submit-button']) ?>
         <?php ActiveForm::end(); ?>
     </div>
