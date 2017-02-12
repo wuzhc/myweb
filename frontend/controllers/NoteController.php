@@ -17,6 +17,10 @@ use yii\web\Controller;
 class NoteController extends Controller
 {
 
+    /**
+     * @return string
+     * @since 2017-02-12
+     */
     public function actionAdd()
     {
         if ($data = Yii::$app->request->post())
@@ -32,17 +36,25 @@ class NoteController extends Controller
         }
         else
         {
+            $noteObj = Note::find();
             $flag = Yii::$app->request->get('flag');
-            if ($flag && strcasecmp($flag,'today') ===0) {
+            if ($flag && strcasecmp($flag,'today') === 0) {
                 $begin = date('Y-m-d 00:00:00',time());
                 $end = date('Y-m-d 23:59:00', time());
-                $data = Note::find()->where(['between', 'time', $begin, $end]);
-            } else {
-                $data = Note::find();
+                $noteObj->andFilterWhere(['between', 'time', $begin, $end]);
             }
 
-            $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '20']);
-            $dataModel = $data->offset($pages->offset)->limit($pages->limit)->orderBy(['id'=>SORT_DESC])->all();
+            $status = Yii::$app->request->get('status');
+            if ($status && strcasecmp($status,'unfinish') === 0) {
+                $noteObj->andFilterWhere(['status' => 1]);
+            } elseif ($status && strcasecmp($status,'finish') === 0) {
+                $noteObj->andFilterWhere(['status' => 2]);
+            } else {
+                $noteObj->andFilterWhere(['in','status',[1,2]]);
+            }
+
+            $pages = new Pagination(['totalCount' =>$noteObj->count(), 'pageSize' => '20']);
+            $dataModel = $noteObj->offset($pages->offset)->limit($pages->limit)->orderBy(['id'=>SORT_DESC])->all();
 
             return $this->render('add',[
                 'dataModel' => $dataModel,
@@ -55,10 +67,16 @@ class NoteController extends Controller
     /**
      * 标记已完成状态
      * @throws \yii\db\Exception
+     * @since 2017-02-12
      */
     public function actionCheck()
     {
-        $data = array_filter(Yii::$app->request->post('value'), function($v) {
+
+        $value = Yii::$app->request->post('value');
+        if (!is_array($value)) {
+            echo 'illegal request'; exit;
+        }
+        $data = array_filter($value, function($v) {
             return is_numeric($v);
         });
 
@@ -67,7 +85,28 @@ class NoteController extends Controller
             Yii::$app->db->createCommand($sql)->execute();
             $this->redirect(array('note/add'));
         } else {
-            echo 'ilegal'; exit;
+            echo 'empty data'; exit;
         }
     }
+
+    /**
+     * Delete record
+     * @since 2017-02-12
+     */
+    public function actionDelete()
+    {
+        $id = Yii::$app->request->get('id');
+        if (!is_numeric($id)) {
+            echo 'illegal request'; exit;
+        }
+
+        $isExists = Note::find()->where(['id'=>$id])->exists();
+        if (!$isExists) {
+            echo 'record is not exists'; exit;
+        }
+
+        Note::updateAll(['status'=>3],['id'=>$id]);
+        $this->redirect(['note/add']);
+    }
+
 }
