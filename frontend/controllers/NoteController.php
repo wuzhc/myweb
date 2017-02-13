@@ -54,7 +54,11 @@ class NoteController extends Controller
             }
 
             $pages = new Pagination(['totalCount' =>$noteObj->count(), 'pageSize' => '20']);
-            $dataModel = $noteObj->offset($pages->offset)->limit($pages->limit)->orderBy(['id'=>SORT_DESC])->all();
+            $dataModel = $noteObj
+                ->offset($pages->offset)
+                ->limit($pages->limit)
+                ->orderBy(['id'=>SORT_DESC])
+                ->all();
 
             return $this->render('add',[
                 'dataModel' => $dataModel,
@@ -71,7 +75,6 @@ class NoteController extends Controller
      */
     public function actionCheck()
     {
-
         $value = Yii::$app->request->post('value');
         if (!is_array($value)) {
             echo 'illegal request'; exit;

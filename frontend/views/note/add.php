@@ -8,6 +8,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\LinkPager;
+use yii\helpers\Url;
 
 $this->title = '问题记录';
 ?>
@@ -16,11 +17,11 @@ $this->title = '问题记录';
     <div class="col-xs-12 col-md-8">
         <div style="margin-bottom: 10px">
             <h3 style="display: inline">问题汇总</h3>&nbsp;&nbsp;
-            <?= Html::a('(查看今天问题)', \yii\helpers\Url::to(['note/add','flag'=>'today'])) ?>
-            <?= Html::a('(查看未完成问题)', \yii\helpers\Url::to(['note/add','status'=>'unfinish'])) ?>
-            <?= Html::a('(查看已完成问题)', \yii\helpers\Url::to(['note/add','status'=>'finish'])) ?>
+            <?= Html::a('(查看今天问题)', Url::to(['note/add','flag'=>'today'])) ?>
+            <?= Html::a('(查看未完成问题)', Url::to(['note/add','status'=>'unfinish'])) ?>
+            <?= Html::a('(查看已完成问题)', Url::to(['note/add','status'=>'finish'])) ?>
         </div>
-        <form action="<?= \yii\helpers\Url::to(['note/check'])?>" method="post">
+        <form action="<?= Url::to(['note/check'])?>" method="post">
             <input type="hidden" name="<?= Yii::$app->request->csrfParam?>" value="<?= Yii::$app->request->getCsrfToken()?>">
             <ul class="list-group">
                 <?php foreach($dataModel as $key=>$val) { ?>
@@ -31,7 +32,7 @@ $this->title = '问题记录';
                         <span><input type="checkbox" value="<?=$val->id?>" name="value[]"></span>
                     <?php } ?>
                     <span><?= $key + 1?>.</span>
-                    <a href="<?=\yii\helpers\Url::to(['note/delete','id'=>$val->id])?>" class="badge" style="background-color:#d9534f">删除</a>
+                    <?=Html::a('删除',Url::to(['note/delete','id'=>$val->id]),['class'=>'badge','style'=>'background-color:#d9534f'])?>
                     <span class="badge" style="background-color: #337ab7"><?=date('Y-m-d', strtotime($val->time))?></span>
                     <?=\yii\bootstrap\Html::encode($val->content)?>
                 </li>
