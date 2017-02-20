@@ -9,6 +9,14 @@ return [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'TRvyZcHFusQV31-jHjz2BbWxTD8QryuU',
         ],
+        'urlManager' => [
+            /*'enablePrettyUrl' => true, //对url进行美化
+            'showScriptName' => false,//隐藏index.php
+            'suffix' => '.html',//后缀
+            'enableStrictParsing'=>false,//不要求网址严格匹配，则不需要输入rules
+            'rules' => [
+            ]//网址匹配规则*/
+        ],
         'db' => [
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=myweb',
