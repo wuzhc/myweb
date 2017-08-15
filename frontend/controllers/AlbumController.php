@@ -10,11 +10,8 @@ namespace frontend\controllers;
 
 
 use common\config\Conf;
-use common\helper\DebugHelper;
-use common\service\CategoryService;
 use common\service\ContentService;
 use Yii;
-use yii\helpers\VarDumper;
 use yii\web\Controller;
 
 class AlbumController extends Controller

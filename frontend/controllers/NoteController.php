@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * User: wuzhc
- * Date: 2017Äê02ÔÂ12ÈÕ
+ * Date: 2017ï¿½ï¿½02ï¿½ï¿½12ï¿½ï¿½
  * Time: 14:28
  */
 
@@ -23,8 +23,7 @@ class NoteController extends Controller
      */
     public function actionAdd()
     {
-        if ($data = Yii::$app->request->post())
-        {
+        if ($data = Yii::$app->request->post()) {
             $note = new Note();
             if ($note->load(Yii::$app->request->post()) && $note->validate()) {
                 if ($note->save()) {
@@ -33,34 +32,32 @@ class NoteController extends Controller
             } else {
                 var_dump($note->getErrors());
             }
-        }
-        else
-        {
+        } else {
             $noteObj = Note::find();
             $flag = Yii::$app->request->get('flag');
-            if ($flag && strcasecmp($flag,'today') === 0) {
-                $begin = date('Y-m-d 00:00:00',time());
+            if ($flag && strcasecmp($flag, 'today') === 0) {
+                $begin = date('Y-m-d 00:00:00', time());
                 $end = date('Y-m-d 23:59:00', time());
                 $noteObj->andFilterWhere(['between', 'time', $begin, $end]);
             }
 
             $status = Yii::$app->request->get('status');
-            if ($status && strcasecmp($status,'unfinish') === 0) {
+            if ($status && strcasecmp($status, 'unfinish') === 0) {
                 $noteObj->andFilterWhere(['status' => 1]);
-            } elseif ($status && strcasecmp($status,'finish') === 0) {
+            } elseif ($status && strcasecmp($status, 'finish') === 0) {
                 $noteObj->andFilterWhere(['status' => 2]);
             } else {
-                $noteObj->andFilterWhere(['in','status',[1,2]]);
+                $noteObj->andFilterWhere(['in', 'status', [1, 2]]);
             }
 
-            $pages = new Pagination(['totalCount' =>$noteObj->count(), 'pageSize' => '20']);
+            $pages = new Pagination(['totalCount' => $noteObj->count(), 'pageSize' => '20']);
             $dataModel = $noteObj
                 ->offset($pages->offset)
                 ->limit($pages->limit)
-                ->orderBy(['id'=>SORT_DESC])
+                ->orderBy(['id' => SORT_DESC])
                 ->all();
 
-            return $this->render('add',[
+            return $this->render('add', [
                 'dataModel' => $dataModel,
                 'model' => new Note(),
                 'pages' => $pages,
@@ -69,7 +66,7 @@ class NoteController extends Controller
     }
 
     /**
-     * ±ê¼ÇÒÑÍê³É×´Ì¬
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬
      * @throws \yii\db\Exception
      * @since 2017-02-12
      */
@@ -77,18 +74,20 @@ class NoteController extends Controller
     {
         $value = Yii::$app->request->post('value');
         if (!is_array($value)) {
-            echo 'illegal request'; exit;
+            echo 'illegal request';
+            exit;
         }
-        $data = array_filter($value, function($v) {
+        $data = array_filter($value, function ($v) {
             return is_numeric($v);
         });
 
         if ($data) {
-            $sql = 'update '.Note::tableName(). ' set status = 2 where id in ('. implode(',',$data) .')';
+            $sql = 'update ' . Note::tableName() . ' set status = 2 where id in (' . implode(',', $data) . ')';
             Yii::$app->db->createCommand($sql)->execute();
             $this->redirect(array('note/add'));
         } else {
-            echo 'empty data'; exit;
+            echo 'empty data';
+            exit;
         }
     }
 
@@ -100,15 +99,17 @@ class NoteController extends Controller
     {
         $id = Yii::$app->request->get('id');
         if (!is_numeric($id)) {
-            echo 'illegal request'; exit;
+            echo 'illegal request';
+            exit;
         }
 
-        $isExists = Note::find()->where(['id'=>$id])->exists();
+        $isExists = Note::find()->where(['id' => $id])->exists();
         if (!$isExists) {
-            echo 'record is not exists'; exit;
+            echo 'record is not exists';
+            exit;
         }
 
-        Note::updateAll(['status'=>3],['id'=>$id]);
+        Note::updateAll(['status' => 3], ['id' => $id]);
         $this->redirect(['note/add']);
     }
 

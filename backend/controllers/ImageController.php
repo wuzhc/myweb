@@ -102,7 +102,7 @@ class ImageController extends Controller
 
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('create',[
+            return $this->render('create', [
                 'model' => $model,
             ]);
         }
@@ -160,6 +160,6 @@ class ImageController extends Controller
 
     public function actionUpload()
     {
-        echo UploadHelper::uploadToSimditor('imageUrl','simditor', 600, 450);
+        echo UploadHelper::uploadToSimditor('imageUrl', 'simditor', 600, 450);
     }
 }

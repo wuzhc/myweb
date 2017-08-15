@@ -1,3 +1,4 @@
+
 <?php
 return [
     'language' => 'zh-CN',
@@ -10,16 +11,16 @@ return [
             'cookieValidationKey' => 'TRvyZcHFusQV31-jHjz2BbWxTD8QryuU',
         ],
         'urlManager' => [
-            /*'enablePrettyUrl' => true, //¶Ôurl½øÐÐÃÀ»¯
-            'showScriptName' => false,//Òþ²Øindex.php
-            'suffix' => '.html',//ºó×º
-            'enableStrictParsing'=>false,//²»ÒªÇóÍøÖ·ÑÏ¸ñÆ¥Åä£¬Ôò²»ÐèÒªÊäÈërules
+            /*'enablePrettyUrl' => true, //ï¿½ï¿½urlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            'showScriptName' => false,//ï¿½ï¿½ï¿½ï¿½index.php
+            'suffix' => '.html',//ï¿½ï¿½×º
+            'enableStrictParsing'=>false,//ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Ö·ï¿½Ï¸ï¿½Æ¥ï¿½ä£¬ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½rules
             'rules' => [
-            ]//ÍøÖ·Æ¥Åä¹æÔò*/
+            ]//ï¿½ï¿½Ö·Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½*/
         ],
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=myweb',
+            'dsn' => 'mysql:host=localhost;dbname=blog',
             'username' => 'root',
             'password' => 'wuzhc2580',
             'charset' => 'utf8',

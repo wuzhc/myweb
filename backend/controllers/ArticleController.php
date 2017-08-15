@@ -74,7 +74,7 @@ class ArticleController extends Controller
             }
 
             if (!$model->summary) {
-                $model->summary = StringHelper::truncate(strip_tags($model->content),120);
+                $model->summary = StringHelper::truncate(strip_tags($model->content), 120);
             }
 
             if ($model->save()) {
@@ -112,7 +112,7 @@ class ArticleController extends Controller
             }
 
             if (!$model->summary) {
-                $model->summary = StringHelper::truncate(strip_tags($model->content),120);
+                $model->summary = StringHelper::truncate(strip_tags($model->content), 120);
             }
 
             if ($model->save()) {
@@ -193,7 +193,8 @@ class ArticleController extends Controller
 
         if ($cleanupTargetDir) {
             if (!is_dir($targetDir) || !$dir = opendir($targetDir)) {
-                echo 'error|Failed to open temp directory'; exit;
+                echo 'error|Failed to open temp directory';
+                exit;
             }
 
             while (($file = readdir($dir)) !== false) {
@@ -211,20 +212,24 @@ class ArticleController extends Controller
         }
 
         if (!$out = @fopen("{$filePath}_{$chunk}.parttmp", "wb")) {
-            echo 'error|Failed to open output stream'; exit;
+            echo 'error|Failed to open output stream';
+            exit;
         }
 
         if (!empty($_FILES)) {
             if ($_FILES["file"]["error"] || !is_uploaded_file($_FILES["file"]["tmp_name"])) {
-                echo 'error|Failed to move uploaded file'; exit;
+                echo 'error|Failed to move uploaded file';
+                exit;
             }
 
             if (!$in = @fopen($_FILES["file"]["tmp_name"], "rb")) {
-                echo 'Failed to open input stream'; exit;
+                echo 'Failed to open input stream';
+                exit;
             }
         } else {
             if (!$in = @fopen("php://input", "rb")) {
-                echo 'Failed to open input stream'; exit;
+                echo 'Failed to open input stream';
+                exit;
             }
         }
 
@@ -239,19 +244,20 @@ class ArticleController extends Controller
 
         $index = 0;
         $done = true;
-        for( $index = 0; $index < $chunks; $index++ ) {
-            if ( !file_exists("{$filePath}_{$index}.part") ) {
+        for ($index = 0; $index < $chunks; $index++) {
+            if (!file_exists("{$filePath}_{$index}.part")) {
                 $done = false;
                 break;
             }
         }
-        if ( $done ) {
+        if ($done) {
             if (!$out = @fopen($uploadPath, "wb")) {
-                echo 'error|Failed to open output stream11';exit;
+                echo 'error|Failed to open output stream11';
+                exit;
             }
 
-            if ( flock($out, LOCK_EX) ) {
-                for( $index = 0; $index < $chunks; $index++ ) {
+            if (flock($out, LOCK_EX)) {
+                for ($index = 0; $index < $chunks; $index++) {
                     if (!$in = @fopen("{$filePath}_{$index}.part", "rb")) {
                         break;
                     }
@@ -269,6 +275,6 @@ class ArticleController extends Controller
             @fclose($out);
         }
 
-        echo './' . $uploadDir. '/'. $fileName;
+        echo './' . $uploadDir . '/' . $fileName;
     }
 }
