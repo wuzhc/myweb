@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $content->title;
 <?php $this->registerJs($this->blocks['jquery'], \yii\web\View::POS_END); ?>
 <style>
     td{
-        border: 1px solid #cccccc;
+        border: 1px dashed #c5af75;
     }
 </style>
 <div class="container">
