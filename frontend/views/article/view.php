@@ -5,14 +5,17 @@ $this->title = $content->title;
 $this->params['breadcrumbs'][] = array('label'=>$category->title,'url'=>['article/index','cid'=>$category->id,'parentID'=>$category->parent]);
 $this->params['breadcrumbs'][] = $content->title;
 ?>
-
 <?php echo Html::cssFile('public/common/highlightJS/styles/github.css')?>
 <?php $this->registerJsFile('@web/public/common/highlightJS/highlight.pack.js',['depends' => \yii\web\JqueryAsset::className()])?>
 <?php $this->beginBlock('jquery') ?>
     hljs.initHighlightingOnLoad();
 <?php $this->endBlock() ?>
 <?php $this->registerJs($this->blocks['jquery'], \yii\web\View::POS_END); ?>
-
+<style>
+    td{
+        border: 1px solid #cccccc;
+    }
+</style>
 <div class="container">
     <div>
         <p style="font-size: 24px; text-align: center; color: #000000; font-weight: bold">
