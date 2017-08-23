@@ -10,9 +10,9 @@ use yii\helpers\StringHelper;
         <?php echo Html::a(StringHelper::truncate(Html::encode($model->title), 35),['article/view','id'=>$model->id,'parentID'=>$_GET['parentID']],['style'=>array('color'=>'#000000')])?>
     </h4>
     <p style="font-size: 12px;color: #777">
-        <span class="glyphicon glyphicon-eye-open"></span>：<?php echo $model->hits;?>
+<!--        <span class="glyphicon glyphicon-eye-open"></span>：--><?php //echo $model->hits;?>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <span class="glyphicon glyphicon-calendar"></span>：<?php echo date('Y-m-d', $model->create_at); ?>
+<!--        <span class="glyphicon glyphicon-calendar"></span>：--><?php //echo date('Y-m-d', $model->create_at); ?>
     </p>
     <p style='font-size: 14px;line-height:24px;'><?php echo HtmlPurifier::process($model->summary) ?></p>
 </div>
