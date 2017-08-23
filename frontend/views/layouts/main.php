@@ -41,7 +41,7 @@ AppAsset::register($this);
     <?php $this->head() ?>
     <style>
         a,p{
-            font-family: "Helvetica", "Hiragino Sans GB", "Microsoft Yahei", "Î¢ÈíÑÅºÚ", Arial, sans-serif;
+            font-family: "Helvetica", "Hiragino Sans GB", "Microsoft Yahei", "Î¢ï¿½ï¿½ï¿½Åºï¿½", Arial, sans-serif;
         }
     </style>
 </head>
@@ -51,7 +51,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Code Demo',
+        'brandLabel' => 'wuzhc',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse',
@@ -93,7 +93,7 @@ AppAsset::register($this);
 
 <footer class="footer" style="margin-top: 20px">
     <div class="container">
-        <p class="pull-left">&copy; Code Demo <?= date('Y') ?> by wuzhc</p>
+        <p class="pull-left">&copy; wuzhc <?= date('Y') ?> by wuzhc</p>
         <p class="pull-right"></p>
     </div>
 </footer>

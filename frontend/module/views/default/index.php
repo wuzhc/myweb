@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Url;
-$this->title = 'Code Demo';
+$this->title = 'wuzhc';
 ?>
 <section class="clear">
 
