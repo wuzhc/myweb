@@ -38,7 +38,7 @@ use yii\helpers\Url;
                     <a href="<?php echo Url::to(['article/view','id'=>$article->id])?>">
                         <?php echo Html::encode(StringHelper::truncate($article->title,22))?>
                     </a>
-                    <span style="position: absolute;right: 5px;font-size: 10px"><?php echo date('Y-m-d',$article->create_at) ?></span>
+<!--                    <span style="position: absolute;right: 5px;font-size: 10px">--><?php //echo date('Y-m-d',$article->create_at) ?><!--</span>-->
             </li>
         <?php } ?>
     </ul>
