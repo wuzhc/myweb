@@ -25,13 +25,13 @@ use yii\widgets\ActiveForm;
 
     <?/*= $form->field($model, 'image_url')->fileInput() */?>
 
-    <?/*= $form->field($model, 'hits')->textInput(['value' => 0])->label('点击数') */?>
+    <?= $form->field($model, 'hits')->textInput(['value' => 0])->label('点击数') ?>
 
     <?/*= $form->field($model, 'comments')->textInput(['value' => 0])->label('评论数') */?>
 
     <?= $form->field($model, 'sort')->textInput(['value' => 0,'style'=>'width:100px'])->label('排序') ?>
 
-    <?/*= $form->field($model, 'status')->radioList(['0' => '已审核', '1' => '未审核'])->label('状态') */?>
+    <?= $form->field($model, 'status')->radioList(['0' => '已审核', '1' => '未审核'])->label('状态') ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
