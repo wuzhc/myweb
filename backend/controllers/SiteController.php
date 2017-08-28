@@ -75,6 +75,11 @@ class SiteController extends Controller
         }
     }
 
+    public function actionForbid()
+    {
+        exit('Sorry, You don\'t have permission to access！');
+    }
+
     public function actionLogout()
     {
         Yii::$app->user->logout();
