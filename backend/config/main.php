@@ -13,9 +13,6 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
-    'catchAll' => [
-        'site/forbid'
-    ],
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',
