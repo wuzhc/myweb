@@ -7,6 +7,7 @@ use common\models\Content;
 use common\service\ContentService;
 use Yii;
 use backend\models\AricleSearch;
+use yii\filters\AccessControl;
 use yii\helpers\StringHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -21,6 +22,16 @@ class ArticleController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => [],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
