@@ -36,7 +36,7 @@ return [
 
         'urlManager' => [
             'enablePrettyUrl' => true,
-            'showScriptName' => true,
+            'showScriptName' => false,
             'suffix' => '.html',
             'rules' => [
                 'article/index/<parentID:\d+>/<cid:\d+>' => 'article/index',
