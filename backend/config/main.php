@@ -30,15 +30,15 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'suffix' => '.html',
-            'rules' => [
-                '<controller:[-\w]+>/<action:[-\w]+>/<id:\d+>' => '<controller>/<action>',
-                '<controller:[-\w]+>/<action:[-\w]+>' => '<controller>/<action>',
-            ],
-        ],
+//        'urlManager' => [
+//            'enablePrettyUrl' => true,
+//            'showScriptName' => false,
+//            'suffix' => '.html',
+//            'rules' => [
+//                '<controller:[-\w]+>/<action:[-\w]+>/<id:\d+>' => '<controller>/<action>',
+//                '<controller:[-\w]+>/<action:[-\w]+>' => '<controller>/<action>',
+//            ],
+//        ],
         'assetManager' => [
             'basePath' => '@webroot/backend/web/assets',
             'baseUrl' => '@web/backend/web/assets'

@@ -41,6 +41,7 @@ return [
             'rules' => [
                 'article/index/<parentID:\d+>/<cid:\d+>' => 'article/index',
                 'article/index/<parentID:\d+>' => 'article/index',
+                'article/view/<parentID:\d+>' => 'article/view',
                 '<controller:[-\w]+>/<action:[-\w]+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:[-\w]+>/<action:[-\w]+>' => '<controller>/<action>',
             ],
