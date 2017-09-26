@@ -33,14 +33,19 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
+
         'urlManager' => [
             'enablePrettyUrl' => true,
-            'showScriptName' => false,
+            'showScriptName' => true,
+            'suffix' => '.html',
             'rules' => [
+                'article/index/<parentID:\d+>/<cid:\d+>' => 'article/index',
+                'article/index/<parentID:\d+>' => 'article/index',
+                '<controller:[-\w]+>/<action:[-\w]+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:[-\w]+>/<action:[-\w]+>' => '<controller>/<action>',
             ],
         ],
-        */
+
         'assetManager' => [
             'basePath' => '@webroot/frontend/web/assets',
             'baseUrl' => '@web/frontend/web/assets'
