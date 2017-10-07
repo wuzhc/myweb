@@ -11,20 +11,24 @@ use frontend\assets\AppAsset;
 use common\widgets\Alert;
 use common\service\CategoryService;
 
+$curPID = $_GET['parentID'];
 $menuItems = array();
-$baseCats = CategoryService::factory()->getCategories(array('parent'=>0,'order'=>'sort desc'));
+$menuItems[0]['label'] = '首页';
+$menuItems[0]['url'] = \yii\helpers\Url::to(['article/index']);
+if (empty($curPID)) {
+    $menuItems[0]['active'] = true;
+}
 
+$baseCats = CategoryService::factory()->getCategories(array('parent'=>0,'order'=>'sort desc'));
 if (is_array($baseCats)) {
-    $i = 0;
-    foreach ($baseCats as $key => $cat) {
+    $key = 1;
+    foreach ($baseCats as $cat) {
         $menuItems[$key]['label'] = $cat->title;
         $menuItems[$key]['url'] = $cat->url ?: array('article/index','parentID'=>$cat->id);
-        if ($i == 0 && !$_GET['parentID']) {
-            $menuItems[$key]['active'] = true;
-        } elseif ($_GET['parentID'] == $cat->id) {
+        if ($curPID == $cat->id) {
             $menuItems[$key]['active'] = true;
         }
-        $i++;
+        $key++;
     }
 }
 AppAsset::register($this);
