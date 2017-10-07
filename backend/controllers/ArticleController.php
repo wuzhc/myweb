@@ -88,13 +88,14 @@ class ArticleController extends Controller
                 $model->summary = StringHelper::truncate(strip_tags($model->content), 120);
             }
 
+            $model->sort = !is_numeric($model->sort) ? 0 : $model->sort;
+            $model->hits = !is_numeric($model->hits) ? 0 : $model->hits;
             if ($model->save()) {
                 $data['contentID'] = $model->id;
                 $data['content'] = $model->content;
                 ContentService::factory()->saveArticleContent($data);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-
         }
 
         return $this->render('create', [
@@ -126,6 +127,8 @@ class ArticleController extends Controller
                 $model->summary = StringHelper::truncate(strip_tags($model->content), 120);
             }
 
+            $model->sort = !is_numeric($model->sort) ? 0 : $model->sort;
+            $model->hits = !is_numeric($model->hits) ? 0 : $model->hits;
             if ($model->save()) {
                 $data['contentID'] = $model->id;
                 $data['content'] = $model->content;
@@ -136,6 +139,7 @@ class ArticleController extends Controller
         }
 
         $model->content = $model->article->content;
+
         return $this->render('update', [
             'model' => $model,
         ]);

@@ -22,15 +22,23 @@ class ArticleController extends Controller
      */
     public function actionIndex()
     {
-        $baseCID = Yii::$app->request->get('parentID',2);
+        // 大分类ID
+        $baseCID = Yii::$app->request->get('parentID');
+        // 小分类ID
         $cid = Yii::$app->request->get('cid');
-
-        if (!is_numeric($baseCID) || !in_array($baseCID, array_keys(Yii::$app->params['baseCats']))) {
-            Yii::$app->end('参数错误！');
+        if (empty($baseCID) && empty($cid)) {
+            $articles = ContentService::factory()->getContents(array(
+                'status' => Conf::ENABLE,
+                'order' => 'sort DESC, id DESC',
+            ),10);
+            return $this->render('index',array(
+                'articles' => $articles,
+                'cats' => array(),
+            ));
         }
 
         $childrenCats = CategoryService::factory()->getChildCategories($baseCID);
-
+        // cid可无
         if ($cid && !in_array($cid, ArrayHelper::getColumn($childrenCats,'id'))) {
             Yii::$app->end('参数错误！');
         }
@@ -47,7 +55,6 @@ class ArticleController extends Controller
                 'categoryID' => $cid
             ),10);
         }
-
         return $this->render('index',array(
             'articles' => $articles,
             'cats' => $childrenCats,
