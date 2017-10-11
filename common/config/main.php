@@ -6,10 +6,10 @@ return [
     'timeZone' => 'Asia/Shanghai',
     'defaultRoute' => 'article',
     'components' => [
-        'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'TRvyZcHFusQV31-jHjz2BbWxTD8QryuU',
-        ],
+//        'request' => [
+//            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+//            'cookieValidationKey' => 'TRvyZcHFusQV31-jHjz2BbWxTD8QryuU',
+//        ],
         'urlManager' => [
             /*'enablePrettyUrl' => true, //��url��������
             'showScriptName' => false,//����index.php
