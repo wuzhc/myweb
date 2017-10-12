@@ -31,7 +31,6 @@ if (is_array($cats)) {
             <?php } else { ?>
                 暂无数据！
             <?php } ?>
-
         </div>
         <div class="col-md-4">
             <?php echo \common\widgets\LeftCntWidget::widget(); ?>

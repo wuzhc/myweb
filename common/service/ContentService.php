@@ -9,6 +9,7 @@
 namespace common\service;
 
 
+use common\models\Comment;
 use Yii;
 use common\helper\DebugHelper;
 use common\models\Content;
@@ -102,8 +103,25 @@ class ContentService extends AbstractService
     }
 
     /**
+     * æ–‡ç« è¯„è®º
+     * @param $contentID
+     * @param $parentID
+     * @return ActiveDataProvider
+     */
+    public function getComments($contentID, $parentID = 0)
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Comment::find()->where(['content_id' => $contentID, 'parent' => $parentID]),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+        return $dataProvider;
+    }
+
+    /**
      * @param array $args
-     * @return null|static
+     * @return Content
      */
     public function getContent(array $args)
     {
@@ -143,7 +161,7 @@ class ContentService extends AbstractService
             $query->andFilterWhere(['status' => $args['status']]);
         }
         if (isset($args['keyword'])) {
-            $query->andFilterWhere(['like','title',$args['keyword']]);
+            $query->andFilterWhere(['like', 'title', $args['keyword']]);
         }
         if (isset($args['order'])) {
             $query->addOrderBy($args['order']);
@@ -180,21 +198,21 @@ class ContentService extends AbstractService
     }
 
     /**
-     * »ñÈ¡ÉÏÏÂÆªÎÄÕÂ
-     * @param string $flag ±êÊ¶ prev|next
-     * @param int $currentID µ±Ç°ID
-     * @param int $cid ËùÊô·ÖÀà
+     * è·å–ä¸Šä¸€é¡µæˆ–ä¸‹ä¸€é¡µ
+     * @param string $flag æ ‡è¯†prev|next
+     * @param int $currentID å½“å‰contentID
+     * @param int $cid åˆ†ç±»ID
      * @return array|false
      * @since 2016-10-31
      */
     public function getPrevOrNextArticle($flag, $currentID, $cid)
     {
-        if ($flag != 'prev' || $flag != 'next') {
+        if ($flag != 'prev' && $flag != 'next') {
             return array();
         }
 
         list($operator, $sort) = $flag == 'prev' ? array('<', 'DESC') : array('>', 'deSC');
         $sql = sprintf('SELECT id,title FROM content WHERE id %s :id AND category_id = :cid ORDER BY id %s LIMIT 1', $operator, $sort);
-        return Yii::$app->db->createCommand($sql, array(':id'=>$currentID,':cid'=>$cid))->queryOne();
+        return Yii::$app->db->createCommand($sql, array(':id' => $currentID, ':cid' => $cid))->queryOne();
     }
 }

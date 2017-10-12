@@ -85,6 +85,7 @@ class ArticleController extends Controller
         return $this->render('view', [
             'content' => $article,
             'category' => Categories::findOne($article->category_id),
+            'comments' => ContentService::factory()->getComments($contentID),
             'prev' => ContentService::factory()->getPrevOrNextArticle('prev', $contentID, $article->category_id),
             'next' => ContentService::factory()->getPrevOrNextArticle('next', $contentID, $article->category_id)
         ]);
