@@ -10,6 +10,7 @@ namespace common\service;
 
 
 use common\models\Comment;
+use common\util\ClientUtil;
 use Yii;
 use common\helper\DebugHelper;
 use common\models\Content;
@@ -111,12 +112,48 @@ class ContentService extends AbstractService
     public function getComments($contentID, $parentID = 0)
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Comment::find()->where(['content_id' => $contentID, 'parent' => $parentID]),
+            'query' => $this->findCommentCriteria($contentID, $parentID),
             'pagination' => [
                 'pageSize' => 10,
             ],
         ]);
         return $dataProvider;
+    }
+
+    /**
+     * @param $contentID
+     * @param $parentID
+     * @return $this
+     */
+    public function findCommentCriteria($contentID, $parentID)
+    {
+        return Comment::find()
+            ->where(['content_id' => $contentID, 'parent' => $parentID])
+            ->orderBy(['id' => SORT_DESC]);
+    }
+
+    /**
+     * 添加评论
+     * @param $data
+     * @return bool
+     * @since 2017-10-13
+     */
+    public function addComment($data)
+    {
+        /** @var Comment $comment */
+        $comment = new Comment();
+        $comment->text = $data['text'];
+        $comment->ip = $data['ip'];
+        $comment->create_at = time();
+        $comment->content_id = $data['contentID'];
+        $comment->parent = 0;
+        if ($comment->save()) {
+            return true;
+        } else {
+            header("Content-Type:text/html;charset=utf-8");
+            var_dump($comment->getErrors());exit;
+        }
+        return $comment->save() ? true : false;
     }
 
     /**

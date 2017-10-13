@@ -1,6 +1,8 @@
 <?php
+use yii\captcha\Captcha;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\widgets\ListView;
 
@@ -9,19 +11,18 @@ $this->params['breadcrumbs'][] = array('label'=>$category->title,'url'=>['articl
 $this->params['breadcrumbs'][] = $content->title;
 ?>
 <?php echo Html::cssFile('public/common/highlightJS/styles/github.css')?>
+<?php echo Html::cssFile('public/common/css/thickbox.css')?>
 <?php $this->registerJsFile('@web/public/common/highlightJS/highlight.pack.js',['depends' => \yii\web\JqueryAsset::className()])?>
+<?php $this->registerJsFile('@web/public/common/js/thickbox.js',['depends' => \yii\web\JqueryAsset::className()])?>
+
 <?php $this->beginBlock('jquery') ?>
+<!--<script>-->
     hljs.initHighlightingOnLoad();
-    $('.show-comment').click(function(){
-        $('.comment_list').toggle(1000);
-    });
+<!--</script>-->
 <?php $this->endBlock() ?>
 <?php $this->registerJs($this->blocks['jquery'], \yii\web\View::POS_END); ?>
 <style>
-    td{
-        border: 1px dashed #c5af75;
-    }
-    .media:first-child{margin-top: 10px}
+    td{border: 1px dashed #c5af75;}
 </style>
 <div class="container">
     <div>
@@ -36,40 +37,57 @@ $this->params['breadcrumbs'][] = $content->title;
         <?php echo $content->article->content?>
         </p>
     </div>
+
     <div class="prev_next">
         <p>上一篇： <?= !empty($prev) ? Html::a($prev['title'], ['article/view', 'id' => $prev['id']]) : '无'?></p>
         <p>下一篇： <?= !empty($next) ? Html::a($next['title'], ['article/view', 'id' => $next['id']]) : '无'?></p>
     </div>
-    <div class="comment-box">
-        评论内容：
-        <?php
-        $form = ActiveForm::begin([
-        'id' => 'login-form',
-        'options' => ['class' => 'form-horizontal'],
-        ]) ?>
-        <?= $form->field($model, 'username') ?>
-        <?= $form->field($model, 'password')->passwordInput() ?>
 
-        <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary']) ?>
+    <br>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">添加评论</div>
+                <div class="panel-body">
+                    <?php
+                        $form = ActiveForm::begin([
+                            'id' => 'comment-form',
+                            'action' => Url::to(['article/add-comment']),
+                            'method' => 'post'
+                        ]);
+                    ?>
+                    <?= $form->field($model, 'text', ['template' => "{input}"])->textarea(['rows' => 8, 'placeholder' => '评论一下吧']) ?>
+                    <?= $form->field($model, 'verifyCode', ['template' => "{input}"])->widget(Captcha::className(), [
+                        'template' => '<div class="col-lg-1">{image}</div><div class="col-lg-2">{input}</div>',
+                    ]) ?>
+                    <div class="form-group">
+                        <?= Html::submitButton('提交', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                    </div>
+                    <?= $form->field($model, 'contentID', ['template' => "{input}"])->input('hidden', ['value' => $content->id])->label('')?>
+                    <?php ActiveForm::end(); ?>
+                </div>
             </div>
         </div>
-        <?php ActiveForm::end() ?>
     </div>
-    <div class="page-header show-comment">
-        <h4>查看评论 <small>点击显示列表</small></h4>
+
+    <?php if ($comments->getTotalCount() > 0) { ?>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">评论列表</div>
+                <div class="panel-body">
+                    <?php echo ListView::widget(array(
+                        'summary' => '',
+                        'itemOptions' => array('class'=>'media'),
+                        'dataProvider' => $comments,
+                        'itemView' => '_comment_list',
+                        'emptyText' => '',
+                    ))?>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="comment_list" style="display: none">
-        <?php if (!empty($comments)) { ?>
-            <?php echo ListView::widget(array(
-                'summary' => '',
-                'itemOptions' => array('class'=>'media'),
-                'dataProvider' => $comments,
-                'itemView' => '_comment_list',
-                'emptyText' => '',
-            ))?>
-        <?php } ?>
-    </div>
+    <?php } ?>
 </div>
 

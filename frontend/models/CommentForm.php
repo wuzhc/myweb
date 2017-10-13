@@ -2,20 +2,20 @@
 
 namespace frontend\models;
 
+use common\service\ContentService;
+use common\util\ClientUtil;
 use Yii;
 use yii\base\Model;
 
 /**
  * ContactForm is the model behind the contact form.
  */
-class ContactForm extends Model
+class CommentForm extends Model
 {
-    public $name;
-    public $email;
-    public $subject;
-    public $body;
+    public $contentID;
+    public $text;
     public $verifyCode;
-
+    public $parentID;
 
     /**
      * @inheritdoc
@@ -24,11 +24,10 @@ class ContactForm extends Model
     {
         return [
             // name, email, subject and body are required
-            [['name', 'email', 'subject', 'body'], 'required'],
-            // email has to be a valid email address
-            ['email', 'email'],
+            [['text','contentID'], 'required'],
             // verifyCode needs to be entered correctly
             ['verifyCode', 'captcha'],
+            ['parentID', 'safe']
         ];
     }
 
@@ -38,23 +37,29 @@ class ContactForm extends Model
     public function attributeLabels()
     {
         return [
-            'verifyCode' => 'Verification Code',
+            'text' => '',
+            'contentID' => '',
+            'verifyCode' => '',
         ];
     }
 
     /**
-     * Sends an email to the specified email address using the information collected by this model.
-     *
-     * @param string $email the target email address
-     * @return boolean whether the email was sent
+     * 添加评论
+     * 限制：一天只能评论20次
+     * @since 2017-10-13
      */
-    public function sendEmail($email)
+    public function save()
     {
-        return Yii::$app->mailer->compose()
-            ->setTo($email)
-            ->setFrom([$this->email => $this->name])
-            ->setSubject($this->subject)
-            ->setTextBody($this->body)
-            ->send();
+        $clientIP = ClientUtil::getIp();
+        $key = 'comment:' . $clientIP;
+        $res = Yii::$app->redis->set($key, 1, 'ex', 864000, 'nx');
+        if (null === $res && Yii::$app->redis->incr($key) > 20) {
+            return false;
+        }
+
+        $data['ip'] = $clientIP;
+        $data['text'] = $this->text;
+        $data['contentID'] = $this->contentID;
+        return ContentService::factory()->addComment($data);
     }
 }

@@ -1,4 +1,3 @@
-
 <?php
 return [
     'language' => 'zh-CN',
@@ -6,18 +5,6 @@ return [
     'timeZone' => 'Asia/Shanghai',
     'defaultRoute' => 'article',
     'components' => [
-//        'request' => [
-//            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-//            'cookieValidationKey' => 'TRvyZcHFusQV31-jHjz2BbWxTD8QryuU',
-//        ],
-        'urlManager' => [
-            /*'enablePrettyUrl' => true, //��url��������
-            'showScriptName' => false,//����index.php
-            'suffix' => '.html',//��׺
-            'enableStrictParsing'=>false,//��Ҫ����ַ�ϸ�ƥ�䣬����Ҫ����rules
-            'rules' => [
-            ]//��ַƥ�����*/
-        ],
         'db' => [
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=blog',
@@ -27,6 +14,12 @@ return [
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
+        ],
+        'redis' => [
+            'class' => 'yii\redis\Connection',
+            'hostname' => 'localhost',
+            'port' => 6379,
+            'database' => 0,
         ],
         'i18n' => [
             'translations' => [

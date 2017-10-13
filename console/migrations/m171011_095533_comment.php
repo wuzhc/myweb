@@ -26,6 +26,31 @@ class m171011_095533_comment extends Migration
         ], $tableOptions);
 
         $this->createIndex('parent', self::TABLE_NAME, 'parent');
+
+        $this->insert(self::TABLE_NAME, [
+            'parent' => 0,
+            'content_id' => 367,
+            'text' => '配置文件写错了，按下面的写就行，不用放在location下。rewrite ^/wish/(.*).jhtml$ /community/detail/$1.jhtml permanent;',
+            'status' => 0,
+            'ip' => '127.0.0.1',
+            'create_at' => 1507864872
+        ]);
+        $this->insert(self::TABLE_NAME, [
+            'parent' => 0,
+            'content_id' => 367,
+            'text' => '系统中有一个需求是将某一段url链接地址转链到另外一段地址，model类似于将localhost/wish/1234.jhtml自动转到localhost/community/detail/1234.jhtml',
+            'status' => 0,
+            'ip' => '127.0.0.1',
+            'create_at' => 1507864872
+        ]);
+        $this->insert(self::TABLE_NAME, [
+            'parent' => 1,
+            'content_id' => 367,
+            'text' => '确实是这样的',
+            'status' => 0,
+            'ip' => '127.0.0.1',
+            'create_at' => 1507864872
+        ]);
     }
 
     public function safeDown()

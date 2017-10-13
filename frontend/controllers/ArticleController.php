@@ -9,7 +9,9 @@ use common\models\Categories;
 use common\models\Content;
 use common\service\CategoryService;
 use common\service\ContentService;
+use frontend\models\CommentForm;
 use Yii;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
 use yii\web\Controller;
@@ -83,12 +85,34 @@ class ArticleController extends Controller
         Content::updateAllCounters(['hits' => 1],['id'=>$contentID]);
 
         return $this->render('view', [
+            'model' => new CommentForm(),
             'content' => $article,
             'category' => Categories::findOne($article->category_id),
             'comments' => ContentService::factory()->getComments($contentID),
             'prev' => ContentService::factory()->getPrevOrNextArticle('prev', $contentID, $article->category_id),
             'next' => ContentService::factory()->getPrevOrNextArticle('next', $contentID, $article->category_id)
         ]);
+    }
+
+    /**
+     * 添加评论
+     * @since 2017-10-13
+     */
+    public function actionAddComment()
+    {
+        $model = new CommentForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate() && $model->save()) {
+                Yii::$app->session->setFlash('success', '添加成功.');
+            } else {
+                Yii::$app->session->setFlash('error', '添加失败.');
+            }
+            $this->redirect(Yii::$app->request->referrer);
+        } else {
+            return $this->renderPartial('reply_comment', [
+                'parentID' => Yii::$app->request->get('id')
+            ]);
+        }
     }
 
     /**
