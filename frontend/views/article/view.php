@@ -18,7 +18,6 @@ $this->params['breadcrumbs'][] = $content->title;
 <?php $this->beginBlock('jquery') ?>
 <!--<script>-->
     hljs.initHighlightingOnLoad();
-<!--</script>-->
 <?php $this->endBlock() ?>
 <?php $this->registerJs($this->blocks['jquery'], \yii\web\View::POS_END); ?>
 <style>
@@ -48,7 +47,7 @@ $this->params['breadcrumbs'][] = $content->title;
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">添加评论</div>
+                <div class="panel-heading">添加评论<small>（单个IP每天限制50条评论）</small></div>
                 <div class="panel-body">
                     <?php
                         $form = ActiveForm::begin([
@@ -90,4 +89,3 @@ $this->params['breadcrumbs'][] = $content->title;
     </div>
     <?php } ?>
 </div>
-

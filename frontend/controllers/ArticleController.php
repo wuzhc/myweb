@@ -6,6 +6,7 @@ use common\config\Conf;
 use common\helper\DebugHelper;
 use common\models\ArticleContent;
 use common\models\Categories;
+use common\models\Comment;
 use common\models\Content;
 use common\service\CategoryService;
 use common\service\ContentService;
@@ -32,8 +33,8 @@ class ArticleController extends Controller
             $articles = ContentService::factory()->getContents(array(
                 'status' => Conf::ENABLE,
                 'order' => 'sort DESC, id DESC',
-            ),10);
-            return $this->render('index',array(
+            ), 10);
+            return $this->render('index', array(
                 'articles' => $articles,
                 'cats' => array(),
             ));
@@ -41,7 +42,7 @@ class ArticleController extends Controller
 
         $childrenCats = CategoryService::factory()->getChildCategories($baseCID);
         // cid可无
-        if ($cid && !in_array($cid, ArrayHelper::getColumn($childrenCats,'id'))) {
+        if ($cid && !in_array($cid, ArrayHelper::getColumn($childrenCats, 'id'))) {
             Yii::$app->end('参数错误！');
         }
 
@@ -55,9 +56,9 @@ class ArticleController extends Controller
                 'status' => Conf::ENABLE,
                 'order' => 'sort Desc, id Desc',
                 'categoryID' => $cid
-            ),10);
+            ), 10);
         }
-        return $this->render('index',array(
+        return $this->render('index', array(
             'articles' => $articles,
             'cats' => $childrenCats,
             'parentID' => $baseCID,
@@ -82,7 +83,7 @@ class ArticleController extends Controller
             Yii::$app->end('暂无内容！');
         }
 
-        Content::updateAllCounters(['hits' => 1],['id'=>$contentID]);
+        Content::updateAllCounters(['hits' => 1], ['id' => $contentID]);
 
         return $this->render('view', [
             'model' => new CommentForm(),
@@ -109,8 +110,15 @@ class ArticleController extends Controller
             }
             $this->redirect(Yii::$app->request->referrer);
         } else {
+            $id = Yii::$app->request->get('id');
+            if (empty($id) || (!$comment = Comment::findOne($id))) {
+                Yii::$app->session->setFlash('error', '评论不存在.');
+                $this->redirect(Yii::$app->request->referrer);
+                exit;
+            }
             return $this->renderPartial('reply_comment', [
-                'parentID' => Yii::$app->request->get('id')
+                'model' => $model,
+                'comment' => $comment
             ]);
         }
     }
@@ -126,8 +134,8 @@ class ArticleController extends Controller
             'status' => Conf::ENABLE,
             'order' => 'sort Desc, id Desc',
             'keyword' => $keyword
-        ),10);
-        return $this->render('search',array(
+        ), 10);
+        return $this->render('search', array(
             'articles' => $articles,
         ));
     }
@@ -136,10 +144,10 @@ class ArticleController extends Controller
     {
         $cnts = Content::find()->all();
         foreach ($cnts as $k => $cnt) {
-            if (!($body = ArticleContent::findOne(['content_id'=>$cnt->id]))) {
+            if (!($body = ArticleContent::findOne(['content_id' => $cnt->id]))) {
                 continue;
             }
-            $cnt->summary = StringHelper::truncate(strip_tags($body->content),120);
+            $cnt->summary = StringHelper::truncate(strip_tags($body->content), 120);
             if ($cnt->save()) {
                 echo $cnt->id . 'success<br>';
             } else {

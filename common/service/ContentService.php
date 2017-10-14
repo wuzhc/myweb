@@ -140,19 +140,12 @@ class ContentService extends AbstractService
      */
     public function addComment($data)
     {
-        /** @var Comment $comment */
         $comment = new Comment();
         $comment->text = $data['text'];
         $comment->ip = $data['ip'];
         $comment->create_at = time();
         $comment->content_id = $data['contentID'];
-        $comment->parent = 0;
-        if ($comment->save()) {
-            return true;
-        } else {
-            header("Content-Type:text/html;charset=utf-8");
-            var_dump($comment->getErrors());exit;
-        }
+        $comment->parent = $data['parentID'];
         return $comment->save() ? true : false;
     }
 

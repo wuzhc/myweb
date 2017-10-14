@@ -53,13 +53,14 @@ class CommentForm extends Model
         $clientIP = ClientUtil::getIp();
         $key = 'comment:' . $clientIP;
         $res = Yii::$app->redis->set($key, 1, 'ex', 864000, 'nx');
-        if (null === $res && Yii::$app->redis->incr($key) > 20) {
+        if (null === $res && Yii::$app->redis->incr($key) > 50) {
             return false;
         }
 
         $data['ip'] = $clientIP;
         $data['text'] = $this->text;
         $data['contentID'] = $this->contentID;
+        $data['parentID'] = $this->parentID ?: 0;
         return ContentService::factory()->addComment($data);
     }
 }

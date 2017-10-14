@@ -10,7 +10,7 @@ use yii\widgets\ListView;
 <div class="media-body">
     <h6 class="media-heading"><?=date('Y-m-d H:i:s', $model->create_at)?></h6>
     <?php echo HtmlPurifier::process($model->text) ?>
-    <span><a href="<?=\yii\helpers\Url::to(['article/add-comment', 'id' => $model->id])?>">回复</a></span>
+    <span><a class="thickbox" href="<?=\yii\helpers\Url::to(['article/add-comment', 'with' => 600, 'height' => 400, 'id' => $model->id])?>">回复</a></span>
     <?php $comments = \common\service\ContentService::factory()->getComments($model->content_id, $model->id)?>
     <?php if (!empty($comments)) { ?>
         <?php echo ListView::widget(array(
