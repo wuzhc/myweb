@@ -51,7 +51,7 @@ class CommentForm extends Model
     public function save()
     {
         $clientIP = ClientUtil::getIp();
-        $key = 'comment:' . $clientIP;
+        $key = 'comment:' . $this->contentID . ':' . $clientIP;
         $res = Yii::$app->redis->set($key, 1, 'ex', 864000, 'nx');
         if (null === $res && Yii::$app->redis->incr($key) > 50) {
             return false;

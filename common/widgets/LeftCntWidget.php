@@ -1,6 +1,6 @@
 <?php
 /**
- * Ç°¶Ë×ó²¿ÄÚÈÝ£¨°üÀ¨ÔÄ¶ÁÅÅÐÐºÍ×îÐÂ¶¯Ì¬£©
+ * Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½Ðºï¿½ï¿½ï¿½ï¿½Â¶ï¿½Ì¬ï¿½ï¿½
  * User: Administrator
  * Date: 2016/10/31
  * Time: 8:45
@@ -10,6 +10,7 @@ namespace common\widgets;
 
 
 use common\config\Conf;
+use common\service\CategoryService;
 use common\service\ContentService;
 use yii\base\Widget;
 
@@ -17,12 +18,10 @@ class LeftCntWidget extends Widget
 {
     public function run()
     {
-        $latest = ContentService::factory()->findQuery(array(
-            'select' => 'id,title,create_at',
+        $categories = CategoryService::factory()->getCategories([
             'status' => Conf::ENABLE,
-            'order' => 'id Desc',
-            'limit' => 10,
-        ));
+            'level' => 2,
+        ]);
 
         $rank = ContentService::factory()->findQuery(array(
             'select' => 'id,title,hits',
@@ -32,7 +31,7 @@ class LeftCntWidget extends Widget
         ));
 
         return $this->render('leftCnt', array(
-            'latest' => $latest->all(),
+            'categories' => $categories,
             'rank' => $rank->all()
         ));
     }

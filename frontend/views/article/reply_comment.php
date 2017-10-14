@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
         <div class="modal-content">
             <div class="modal-header">
                 <a type="button" class="close" onclick="tb_remove()"><span aria-hidden="true">&times;</span></a>
-                <h4 class="modal-title" id="exampleModalLabel">回复评论</h4>
+                <h4 class="modal-title" id="exampleModalLabel">添加评论</h4>
             </div>
             <div class="modal-body">
                 <?php

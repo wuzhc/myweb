@@ -107,14 +107,15 @@ class ContentService extends AbstractService
      * 文章评论
      * @param $contentID
      * @param $parentID
+     * @param $pageSize
      * @return ActiveDataProvider
      */
-    public function getComments($contentID, $parentID = 0)
+    public function getComments($contentID, $parentID = 0, $pageSize = 15)
     {
         $dataProvider = new ActiveDataProvider([
             'query' => $this->findCommentCriteria($contentID, $parentID),
             'pagination' => [
-                'pageSize' => 10,
+                'pageSize' => $pageSize,
             ],
         ]);
         return $dataProvider;

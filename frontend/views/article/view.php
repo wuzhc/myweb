@@ -5,13 +5,14 @@ use yii\helpers\HtmlPurifier;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\widgets\ListView;
+use yii\widgets\Pjax;
 
 $this->title = $content->title;
 $this->params['breadcrumbs'][] = array('label'=>$category->title,'url'=>['article/index','cid'=>$category->id,'parentID'=>$category->parent]);
 $this->params['breadcrumbs'][] = $content->title;
 ?>
-<?php echo Html::cssFile('public/common/highlightJS/styles/github.css')?>
-<?php echo Html::cssFile('public/common/css/thickbox.css')?>
+<?php $this->registerCssFile('@web/public/common/highlightJS/styles/github.css')?>
+<?php $this->registerCssFile('@web/public/common/css/thickbox.css')?>
 <?php $this->registerJsFile('@web/public/common/highlightJS/highlight.pack.js',['depends' => \yii\web\JqueryAsset::className()])?>
 <?php $this->registerJsFile('@web/public/common/js/thickbox.js',['depends' => \yii\web\JqueryAsset::className()])?>
 
@@ -47,7 +48,7 @@ $this->params['breadcrumbs'][] = $content->title;
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">添加评论<small>（单个IP每天限制50条评论）</small></div>
+                <div class="panel-heading">添加评论</div>
                 <div class="panel-body">
                     <?php
                         $form = ActiveForm::begin([
@@ -76,13 +77,16 @@ $this->params['breadcrumbs'][] = $content->title;
             <div class="panel panel-default">
                 <div class="panel-heading">评论列表</div>
                 <div class="panel-body">
+                    <?php Pjax::begin(['id' => 'comment']) ?>
                     <?php echo ListView::widget(array(
                         'summary' => '',
                         'itemOptions' => array('class'=>'media'),
                         'dataProvider' => $comments,
                         'itemView' => '_comment_list',
                         'emptyText' => '',
+                        'viewParams' => ['level' => 1]
                     ))?>
+                    <?php Pjax::end()?>
                 </div>
             </div>
         </div>
