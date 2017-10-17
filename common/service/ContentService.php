@@ -129,7 +129,7 @@ class ContentService extends AbstractService
     public function findCommentCriteria($contentID, $parentID)
     {
         return Comment::find()
-            ->where(['content_id' => $contentID, 'parent' => $parentID])
+            ->where(['content_id' => $contentID, 'parent' => $parentID, 'status' => 0])
             ->orderBy(['id' => SORT_DESC]);
     }
 
