@@ -20,7 +20,7 @@ class RabbitmqController extends Controller
      */
     public function actionHandleArticleImage()
     {
-        $connection = new AMQPStreamConnection('127.0.0.1', 5672, 'guest', 'guest');
+        $connection = new AMQPStreamConnection('127.0.0.1', 5672, RABBITMQ_USER, RABBITMQ_PWD);
         $channel = $connection->channel();
 
         // 声明一个队列，注意和发布的队列一致

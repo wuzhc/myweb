@@ -20,10 +20,11 @@ class TestController extends Controller
 {
     public function actionIndex()
     {
-        $connection = new AMQPStreamConnection('127.0.0.1', 5672, 'guest', 'guest');
+        $contentID = $_GET['contentID'];
+        $connection = new AMQPStreamConnection('127.0.0.1', 5672, RABBITMQ_USER, RABBITMQ_PWD);
         $channel = $connection->channel();
         $channel->queue_declare('handle_article_image', false, false, false, false);
-        $msg = new AMQPMessage(371);
+        $msg = new AMQPMessage($contentID);
         $channel->basic_publish($msg, '', 'handle_article_image');
         $channel->close();
         $connection->close();
