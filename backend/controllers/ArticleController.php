@@ -96,7 +96,14 @@ class ArticleController extends Controller
 
                 // 替换有道云图片
                 if ($model->share_id) {
-                    ContentService::factory()->replaceYoudao2Qiniu($model->id);
+                    // 新建链接
+                    $connection = new AMQPStreamConnection('127.0.0.1', 5672, RABBITMQ_USER, RABBITMQ_PWD);
+                    $channel = $connection->channel();
+                    $channel->queue_declare('handle_article_image', false, false, false, false);
+                    $msg = new AMQPMessage($model->share_id);
+                    $channel->basic_publish($msg, '', 'handle_article_image');
+                    $channel->close();
+                    $connection->close();
                 }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -141,7 +148,7 @@ class ArticleController extends Controller
                 // 替换有道云图片
                 if ($model->share_id) {
                     // 新建链接
-                    $connection = new AMQPStreamConnection('127.0.0.1', 5672, 'guest', 'guest');
+                    $connection = new AMQPStreamConnection('127.0.0.1', 5672, RABBITMQ_USER, RABBITMQ_PWD);
                     $channel = $connection->channel();
                     $channel->queue_declare('handle_article_image', false, false, false, false);
                     $msg = new AMQPMessage($model->share_id);
