@@ -89,14 +89,14 @@ class ArticleController extends Controller
             $model->hits = !is_numeric($model->hits) ? 0 : $model->hits;
             $model->summary or $model->summary = StringHelper::truncate(strip_tags($model->content), 200);
             if ($model->save()) {
-                // ±£´æÄÚÈÝ
+                // ä¿å­˜å†…å®¹
                 $data['contentID'] = $model->id;
                 $data['content'] = $model->content;
                 ContentService::factory()->saveArticleContent($data);
 
-                // Ìæ»»ÓÐµÀÔÆÍ¼Æ¬
+                // æ›¿æ¢æœ‰é“äº‘å›¾ç‰‡
                 if ($model->share_id) {
-                    // ÐÂ½¨Á´½Ó
+                    // æ–°å»ºé“¾æŽ¥
                     $connection = new AMQPStreamConnection('127.0.0.1', 5672, RABBITMQ_USER, RABBITMQ_PWD);
                     $channel = $connection->channel();
                     $channel->queue_declare('handle_article_image', false, false, false, false);
@@ -134,20 +134,17 @@ class ArticleController extends Controller
                 unset($model->image_url);
             }
 
-            if (!$model->summary) {
-                $model->summary = StringHelper::truncate(strip_tags($model->content), 120);
-            }
-
             $model->sort = !is_numeric($model->sort) ? 0 : $model->sort;
             $model->hits = !is_numeric($model->hits) ? 0 : $model->hits;
+            $model->summary or $model->summary = StringHelper::truncate(strip_tags($model->content), 200);
             if ($model->save()) {
                 $data['contentID'] = $model->id;
                 $data['content'] = $model->content;
                 ContentService::factory()->saveArticleContent($data, ['content_id' => $model->id]);
 
-                // Ìæ»»ÓÐµÀÔÆÍ¼Æ¬
+                // æ›¿æ¢æœ‰é“äº‘å›¾ç‰‡
                 if ($model->share_id) {
-                    // ÐÂ½¨Á´½Ó
+                    // æ–°å»ºé“¾æŽ¥
                     $connection = new AMQPStreamConnection('127.0.0.1', 5672, RABBITMQ_USER, RABBITMQ_PWD);
                     $channel = $connection->channel();
                     $channel->queue_declare('handle_article_image', false, false, false, false);

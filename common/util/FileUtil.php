@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * User: wuzhc
- * Date: 2017ƒÍ10‘¬19»’
+ * Date: 2017-10-19
  * Time: 10:31
  */
 
@@ -13,7 +13,7 @@ use Yii;
 class FileUtil
 {
     /**
-     * œ¬‘ÿŒƒº˛µΩ±æµÿ
+     * ‰∏ãËΩΩÊñá‰ª∂Âà∞Êú¨Âú∞
      * @param $url
      * @param string $saveDir
      * @param $filename
@@ -27,7 +27,7 @@ class FileUtil
             return ['file' => '', 'code' => 1, 'msg' => 'Url can not empty'];
         }
         if (empty($saveDir)) {
-            $saveDir = Yii::getAlias('@webroot/public/images');
+            $saveDir = Yii::getAlias('@webroot/uploads');
         }
         if (empty($filename)) {
             $urlPath = parse_url($url, PHP_URL_PATH);
@@ -38,9 +38,8 @@ class FileUtil
         }
         if ($type == 1) {
             $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // 1±Ì æ∑µªÿƒ⁄»›
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // 1Ë°®Á§∫ËøîÂõûÊï∞ÊçÆ
             curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-            curl_setopt($ch, CURLOPT_REFERER, 'https://note.youdao.com/editor/collab/bulb.html');
             $res = curl_exec($ch);
             curl_close($ch);
         } else {

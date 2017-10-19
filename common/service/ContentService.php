@@ -70,20 +70,20 @@ class ContentService extends AbstractService
         foreach ((array)$matches[0] as $match) {
             $rs = FileUtil::download2Local($this->generateYDUrl($match, $contentID), uniqid(). '.png');
             if (!empty($rs['file'])) {
-                $url = FileUtil::uploadToQiniu($rs['file'], uniqid() . '.png', false);
-                if ($url) {
-                    $flag = true;
-                    $content = str_replace($match, $url, $content);
-                }
-//                $flag = true;
-//                $url = str_replace(Yii::getAlias('@webroot'), '.', $rs['file']);
-//                $content = str_replace($match, $url, $content);
+//                $url = FileUtil::uploadToQiniu($rs['file'], uniqid() . '.png', false);
+//                if ($url) {
+//                    $flag = true;
+//                    $content = str_replace($match, $url, $content);
+//                }
+                $flag = true;
+                $url = str_replace(Yii::getAlias('@webroot'), '.', $rs['file']);
+                $content = str_replace($match, $url, $content);
             }
         }
 
         if ($flag) {
             $cntObj->content = $content;
-            $cntObj->save();
+//            $cntObj->save();
         }
     }
 

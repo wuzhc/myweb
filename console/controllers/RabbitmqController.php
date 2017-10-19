@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * User: wuzhc
- * Date: 2017Äê10ÔÂ19ÈÕ
+ * Date: 2017å¹´10æœˆ19æ—¥
  * Time: 16:12
  */
 
@@ -15,7 +15,7 @@ use yii\console\Controller;
 class RabbitmqController extends Controller
 {
     /**
-     * ´¦ÀíÎÄÕÂÍ¼Æ¬
+     * å¤„ç†æ–‡ç« å›¾ç‰‡
      * @since 2017-10-19
      */
     public function actionHandleArticleImage()
@@ -23,13 +23,13 @@ class RabbitmqController extends Controller
         $connection = new AMQPStreamConnection('127.0.0.1', 5672, RABBITMQ_USER, RABBITMQ_PWD);
         $channel = $connection->channel();
 
-        // ÉùÃ÷Ò»¸ö¶ÓÁÐ£¬×¢ÒâºÍ·¢²¼µÄ¶ÓÁÐÒ»ÖÂ
-        // consumerÉùÃ÷¶ÓÁÐ£¬È·±£Ïû·ÑÖ®Ç°¶ÓÁÐÒÑ¾­´æÔÚ
+        // å£°æ˜Žä¸€ä¸ªé˜Ÿåˆ—ï¼Œæ³¨æ„å’Œå‘å¸ƒçš„é˜Ÿåˆ—ä¸€è‡´
+        // consumerå£°æ˜Žé˜Ÿåˆ—ï¼Œç¡®ä¿æ¶ˆè´¹ä¹‹å‰é˜Ÿåˆ—å·²ç»å­˜åœ¨
         $channel->queue_declare('handle_article_image', false, false, false, false);
 
         echo ' [*] Waiting for messages. To exit press CTRL+C', "\n";
 
-        // ÏûÏ¢ÊÇ´Ó·þÎñÆ÷Òì²½·¢ËÍµ½¿Í»§¶Ë
+        // æ¶ˆæ¯æ˜¯ä»ŽæœåŠ¡å™¨å¼‚æ­¥å‘é€åˆ°å®¢æˆ·ç«¯
         $callback = function ($msg) {
             echo " [x] Received ", $msg->body, "\n";
             if (is_numeric($msg->body)) {
@@ -38,7 +38,7 @@ class RabbitmqController extends Controller
         };
         $channel->basic_consume('handle_article_image', '', false, true, false, false, $callback);
 
-        // µ±ÓÐ»Øµ÷Ê±½«×èÈû£¬½ÓÊÜµ½ÏûÏ¢Ê±Ö»Ðè»Øµ÷
+        // å½“æœ‰å›žè°ƒæ—¶å°†é˜»å¡žï¼ŒæŽ¥å—åˆ°æ¶ˆæ¯æ—¶åªéœ€å›žè°ƒ
         while (count($channel->callbacks)) {
             $channel->wait();
         }
