@@ -5,6 +5,8 @@ namespace backend\controllers;
 use common\helper\FileHelper;
 use common\models\Content;
 use common\service\ContentService;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 use Yii;
 use backend\models\AricleSearch;
 use yii\filters\AccessControl;
@@ -78,22 +80,24 @@ class ArticleController extends Controller
         $model = new Content();
 
         if ($model->load(Yii::$app->request->post())) {
-
             $fileInstance = UploadedFile::getInstance($model, 'image_url');
             if ($fileInstance && ($filePath = $model->upload($fileInstance))) {
                 $model->image_url = $filePath;
             }
 
-            if (!$model->summary) {
-                $model->summary = StringHelper::truncate(strip_tags($model->content), 120);
-            }
-
             $model->sort = !is_numeric($model->sort) ? 0 : $model->sort;
             $model->hits = !is_numeric($model->hits) ? 0 : $model->hits;
+            $model->summary or $model->summary = StringHelper::truncate(strip_tags($model->content), 200);
             if ($model->save()) {
+                // 保存内容
                 $data['contentID'] = $model->id;
                 $data['content'] = $model->content;
                 ContentService::factory()->saveArticleContent($data);
+
+                // 替换有道云图片
+                if ($model->share_id) {
+                    ContentService::factory()->replaceYoudao2Qiniu($model->id);
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
@@ -133,13 +137,24 @@ class ArticleController extends Controller
                 $data['contentID'] = $model->id;
                 $data['content'] = $model->content;
                 ContentService::factory()->saveArticleContent($data, ['content_id' => $model->id]);
+
+                // 替换有道云图片
+                if ($model->share_id) {
+                    // 新建链接
+                    $connection = new AMQPStreamConnection('127.0.0.1', 5672, 'guest', 'guest');
+                    $channel = $connection->channel();
+                    $channel->queue_declare('handle_article_image', false, false, false, false);
+                    $msg = new AMQPMessage($model->share_id);
+                    $channel->basic_publish($msg, '', 'handle_article_image');
+                    $channel->close();
+                    $connection->close();
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
 
         }
 
         $model->content = $model->article->content;
-
         return $this->render('update', [
             'model' => $model,
         ]);

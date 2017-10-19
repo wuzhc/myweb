@@ -24,6 +24,7 @@ use yii\web\UploadedFile;
  * @property integer $comments
  * @property integer $sort
  * @property integer $status
+ * @property integer $share_id
  * @property integer $create_at
  */
 class Content extends ActiveRecord
@@ -50,7 +51,7 @@ class Content extends ActiveRecord
             [['user_id', 'category_id', 'hits', 'comments', 'sort', 'status', 'create_at'], 'integer'],
             [['title'], 'string', 'max' => 200],
             [['image_url'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
-            [['user_id', 'category_id', 'model_id', 'create_at', 'content', 'contentModel'], 'safe']
+            [['user_id', 'category_id', 'model_id', 'create_at', 'content', 'contentModel', 'share_id'], 'safe']
         ];
     }
 

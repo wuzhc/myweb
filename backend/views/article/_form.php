@@ -18,6 +18,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'summary')->textarea(['rows' => 6])->label('简述') ?>
 
+    <?= $form->field($model, 'share_id')->textarea(['rows' => 6])->label('分享ID') ?>
+
     <?/*= \common\widgets\SimditorWidget::widget(['model' => $model])*/?>
     <?= \common\widgets\WangEditorWidget::widget(['model' => $model])?>
 

@@ -1,4 +1,12 @@
 <?php
+
+/** ÊÇ·ñ¿ªÆôÆßÅ£ */
+define('QINIU_ON', true);
+define('QINIU_BUCKET', 'dasai');
+define('QINIU_DOMAIN', 'http://ooy4hh0wt.bkt.clouddn.com/');
+define('QINIU_ACCESS_KEY', '_Tppfl9BMWS-Ho9zwOwe_e8UZX7WUSxtJA4fewkx1');
+define('QINIU_SECRET_KEY', 'VLzID9xmrZhD8JJb9_CphFu5mVHWIeY314cB_4V81');
+
 return [
     'language' => 'zh-CN',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',

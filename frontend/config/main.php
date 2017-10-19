@@ -38,19 +38,19 @@ return [
             'errorAction' => 'site/error',
         ],
 
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'suffix' => '.html',
-            'rules' => [
-                'article/index/<parentID:\d+>/<cid:\d+>' => 'article/index',
-                'article/index/<parentID:\d+>' => 'article/index',
-                'article/add-comment/<id:\d+>/<width:\d+>/<height:\d+>' => 'article/add-comment',
-                'article/view/<id:\d+>/<parentID:\d+>' => 'article/view',
-                '<controller:[-\w]+>/<action:[-\w]+>/<id:\d+>' => '<controller>/<action>',
-                '<controller:[-\w]+>/<action:[-\w]+>' => '<controller>/<action>',
-            ],
-        ],
+//        'urlManager' => [
+//            'enablePrettyUrl' => true,
+//            'showScriptName' => false,
+//            'suffix' => '.html',
+//            'rules' => [
+//                'article/index/<parentID:\d+>/<cid:\d+>' => 'article/index',
+//                'article/index/<parentID:\d+>' => 'article/index',
+//                'article/add-comment/<id:\d+>/<width:\d+>/<height:\d+>' => 'article/add-comment',
+//                'article/view/<id:\d+>/<parentID:\d+>' => 'article/view',
+//                '<controller:[-\w]+>/<action:[-\w]+>/<id:\d+>' => '<controller>/<action>',
+//                '<controller:[-\w]+>/<action:[-\w]+>' => '<controller>/<action>',
+//            ],
+//        ],
 
         'assetManager' => [
             'basePath' => '@webroot/frontend/web/assets',

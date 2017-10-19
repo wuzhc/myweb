@@ -11,6 +11,7 @@ namespace common\service;
 
 use common\models\Comment;
 use common\util\ClientUtil;
+use common\util\FileUtil;
 use Yii;
 use common\helper\DebugHelper;
 use common\models\Content;
@@ -47,6 +48,61 @@ class ContentService extends AbstractService
         }
 
         return $this->saveContent($model, $data);
+    }
+
+    /**
+     * 替换有道云图片到七牛
+     * @param $contentID
+     */
+    public function replaceYoudao2Qiniu($contentID)
+    {
+        /** @var ArticleContent $cntObj */
+        $cntObj = ArticleContent::find()->where(['content_id' => $contentID])->one();
+        $content = $cntObj->content;
+
+        // 匹配Content表所有有道云图片
+        $pattern = '#http://note.youdao.com/yws/res/\d+/WEBRESOURCE\w+#i';
+        preg_match_all($pattern, $content, $matches, PREG_PATTERN_ORDER);
+
+        $flag = false;
+
+        // 遍历
+        foreach ((array)$matches[0] as $match) {
+            $rs = FileUtil::download2Local($this->generateYDUrl($match, $contentID), uniqid(). '.png');
+            if (!empty($rs['file'])) {
+                $url = FileUtil::uploadToQiniu($rs['file'], uniqid() . '.png', false);
+                if ($url) {
+                    $flag = true;
+                    $content = str_replace($match, $url, $content);
+                }
+//                $flag = true;
+//                $url = str_replace(Yii::getAlias('@webroot'), '.', $rs['file']);
+//                $content = str_replace($match, $url, $content);
+            }
+        }
+
+        if ($flag) {
+            $cntObj->content = $content;
+            $cntObj->save();
+        }
+    }
+
+    /**
+     * 生成有道云图片下载地址
+     * @param $url
+     * @param $contentID
+     * @return string
+     */
+    public function generateYDUrl($url, $contentID)
+    {
+        $path = parse_url($url, PHP_URL_PATH);
+        $host = parse_url($url, PHP_URL_HOST);
+        $arr = explode('/', $path);
+        $len = count($arr);
+        $fileID = $arr[$len - 1];
+        $number = $arr[$len - 2];
+        $share_id = Content::findOne($contentID)->share_id;
+        return $host . '/yws/public/resource/' . $share_id . '/xmlnote/' . $fileID . '/' . $number;
     }
 
     /**

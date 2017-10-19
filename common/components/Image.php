@@ -1,8 +1,8 @@
 <?php
 
-namespace common\util;
+namespace common\component;
 
-class ImageUtil {
+class Image {
 
     private $_image;
     private $_width;
