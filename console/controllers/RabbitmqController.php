@@ -25,8 +25,7 @@ class RabbitmqController extends Controller
 
         // 声明一个队列，注意和发布的队列一致
         // consumer声明队列，确保消费之前队列已经存在
-        $channel->queue_declare('
-        ', false, false, false, false);
+        $channel->queue_declare('handle_article_image', false, false, false, false);
 
         echo ' [*] Waiting for messages. To exit press CTRL+C', "\n";
 
