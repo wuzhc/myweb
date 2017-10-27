@@ -48,6 +48,15 @@ AppAsset::register($this);
             font-family: "Helvetica", "Hiragino Sans GB", "Microsoft Yahei", "΢���ź�", Arial, sans-serif;
         }
     </style>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?1f0df51f0e5f2a9edacb0e47c3509e7e";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -106,14 +115,3 @@ AppAsset::register($this);
 </body>
 </html>
 <?php $this->endPage() ?>
-
-<?php $this->beginBlock('jquery') ?>
-    var _hmt = _hmt || [];
-    (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?1f0df51f0e5f2a9edacb0e47c3509e7e";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-<?php $this->endBlock() ?>
-<?php $this->registerJs($this->blocks['jquery'], \yii\web\View::POS_HEAD); ?>
